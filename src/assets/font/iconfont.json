@@ -1,0 +1,58 @@
+{
+  "id": "2346071",
+  "name": "kuaduan",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11519640",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e742",
+      "unicode_decimal": 59202
+    },
+    {
+      "icon_id": "14478390",
+      "name": "关  闭",
+      "font_class": "guanbi",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "11494983",
+      "name": "倒计时",
+      "font_class": "daojishi",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "5334195",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "12316663",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "12686938",
+      "name": "二维码",
+      "font_class": "icon-1",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "14163915",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    }
+  ]
+}
