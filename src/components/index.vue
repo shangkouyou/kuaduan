@@ -92,7 +92,7 @@
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>1小时5分后删除
+              <i class="iconfont icondaojishi"></i>1小时5分后<strong>删除</strong>
             </div>
           </div>
         </a>
@@ -114,7 +114,7 @@
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>1小时5分后删除
+              <i class="iconfont icondaojishi"></i>5分后删除
             </div>
           </div>
         </a>
@@ -153,8 +153,8 @@ export default {
   },
   methods: {
     doDelContentItem() {
-        this.$message.destroy();
-        this.$message.success("删除成功");
+      this.$message.destroy();
+      this.$message.success("删除成功");
     },
     onFocus() {
       this.inputClass = "focus";
@@ -270,7 +270,7 @@ export default {
       position: absolute;
       right: 0;
       :hover {
-        color: red;
+        color: #c10000;
       }
     }
     .title {
@@ -297,7 +297,7 @@ export default {
         color: #888;
       }
       .del-time {
-        color: #c10000;
+        color: #888;
       }
       .iconfont {
         margin-right: 3px;
