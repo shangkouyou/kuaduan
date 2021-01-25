@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="content-item">
-        <a>
+        <a v-for="(key, index) in 5" :key="index">
           <div class="box tools">
             <a-tooltip placement="top">
               <template slot="title">
@@ -52,18 +52,17 @@
                 class="cobyOrderSn"
                 @click="doCopyWord"
               >
-                <i class="iconfont iconfuzhi"></i>
+                <i class="iconfont iconfuzhi1"></i>
               </a>
             </a-tooltip>
             <a-tooltip placement="top">
               <template slot="title">
-                <span>内容生成二维码</span>
+                <span>在手机上查看</span>
               </template>
               <a @click="doQRCode('按时发生发发的说法发')">
                 <i class="iconfont iconicon-1"></i>
               </a>
             </a-tooltip>
-
             <a-tooltip placement="top">
               <template slot="title">
                 <span>删除</span>
@@ -92,32 +91,13 @@
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>1小时5分后<strong>删除</strong>
+              <i class="iconfont icondaojishi"></i>1小时5分后<strong
+                >删除</strong
+              >
             </div>
           </div>
         </a>
-        <a v-for="(key, index) in 5" :key="index">
-          <div class="box tools">
-            <a>
-              <i class="iconfont iconfuzhi"></i>
-            </a>
-            <a>
-              <i class="iconfont iconicon-1"></i>
-            </a>
-          </div>
-          <h1 class="title">
-            admin zxy123456
-          </h1>
-          <div class="info box">
-            <div class="created-time box">
-              <i class="iconfont iconshijian"></i>3秒前
-            </div>
-            <div class="word-space">|</div>
-            <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>5分后删除
-            </div>
-          </div>
-        </a>
+        <div class="load-end">- 到底了 -</div>
       </div>
     </div>
 
@@ -283,7 +263,13 @@ export default {
     .tools {
       justify-content: flex-start;
       > a {
-        margin-right: 15px;
+        margin-right: 20px;
+        transform: translateY(0);
+          transition: transform ease 0.3s;
+        &:hover {
+          transform: translateY(-3px);
+          transition: transform ease 0.3s;
+        }
       }
     }
     .info {
@@ -303,6 +289,10 @@ export default {
         margin-right: 3px;
       }
     }
+  }
+  .load-end {
+    font-size: 14px;
+    color: #888;
   }
 }
 </style>

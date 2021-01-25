@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12550395",
+      "name": "复制",
+      "font_class": "fuzhi1",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
       "icon_id": "11519640",
       "name": "删除",
       "font_class": "shanchu",
@@ -32,13 +39,6 @@
       "font_class": "sousuo",
       "unicode": "e629",
       "unicode_decimal": 58921
-    },
-    {
-      "icon_id": "12316663",
-      "name": "复制",
-      "font_class": "fuzhi",
-      "unicode": "e621",
-      "unicode_decimal": 58913
     },
     {
       "icon_id": "12686938",
