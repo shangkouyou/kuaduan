@@ -16,6 +16,7 @@
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
+            @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
           />
@@ -132,6 +133,9 @@ export default {
     VueQrcode,
   },
   methods: {
+    doSubmitData(){
+      
+    },
     doDelContentItem() {
       this.$message.destroy();
       this.$message.success("删除成功");
