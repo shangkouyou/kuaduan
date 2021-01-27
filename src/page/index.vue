@@ -86,13 +86,12 @@
           </h1>
           <div class="info box">
             <div class="created-time box">
-              <i class="iconfont iconshijian"></i>3秒前
+              <i class="iconfont iconshijian"></i
+              >{{ timeFormat(item.createTime) }}
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>1小时5分后<strong
-                >删除</strong
-              >
+              <i class="iconfont icondaojishi"></i>1小时5分后删除
             </div>
           </div>
         </a>
@@ -113,7 +112,12 @@ import Vue from "vue";
 import VueQrcode from "vue-qrcode";
 import clipboard from "clipboard";
 Vue.prototype.clipboard = clipboard;
-import { addContentApi, getContentListApi,deleteListItemByIdApi } from "@/api/contentList";
+import {
+  addContentApi,
+  getContentListApi,
+  deleteListItemByIdApi,
+} from "@/api/contentList";
+import { timeFormat } from "@/commons/times";
 
 export default {
   name: "HelloWorld",
@@ -136,7 +140,11 @@ export default {
     this.getContentList();
   },
   methods: {
+    timeFormat(time){
+      return timeFormat(new Date(time).getTime())
+    },
     doSubmitData() {
+      if( !this.words )return;
       let params = {
         content: this.words,
         indate: 1,
@@ -153,7 +161,7 @@ export default {
       });
     },
     doDelContentItem(id) {
-      deleteListItemByIdApi({_id : id}).then(() => {
+      deleteListItemByIdApi({ _id: id }).then(() => {
         this.$message.success("删除成功");
         this.getContentList();
       });
