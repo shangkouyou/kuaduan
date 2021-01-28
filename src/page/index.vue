@@ -29,7 +29,7 @@
             v-for="(item, index) in saveIndate"
             :key="index"
             :class="{ on: isActive === index }"
-            @click="doSetIndate(index)"
+            @click="doSetIndate(index,item)"
           >
             <a-tooltip placement="bottom">
               <template slot="title">
@@ -129,6 +129,7 @@ export default {
       showHcontent: true,
       visible: false,
       saveIndate: [1, 3, 5],
+      indateVal: 1,
       dataList: [],
       isActive: 0,
     };
@@ -147,7 +148,7 @@ export default {
       if( !this.words )return;
       let params = {
         content: this.words,
-        indate: 1,
+        indate: this.indateVal,
       };
       addContentApi(params).then(() => {
         this.$message.success("提交成功");
@@ -189,7 +190,8 @@ export default {
       this.visible = true;
       this.qrcodeValue = text;
     },
-    doSetIndate(index) {
+    doSetIndate(index,item) {
+      this.indateVal = item;
       this.isActive = index;
     },
   },
@@ -296,6 +298,9 @@ export default {
         margin-right: 20px;
         transform: translateY(0);
         transition: transform ease 0.3s;
+        &:last-child{
+          margin-right: 10px;
+        }
         &:hover {
           transform: translateY(-3px);
           transition: transform ease 0.3s;
