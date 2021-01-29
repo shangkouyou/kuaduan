@@ -141,11 +141,11 @@ export default {
     this.getContentList();
   },
   methods: {
-    timeFormat(time){
-      return timeFormat(new Date(time).getTime())
+    timeFormat(time) {
+      return timeFormat(new Date(time).getTime());
     },
     doSubmitData() {
-      if( !this.words )return;
+      if (!this.words) return;
       let params = {
         content: this.words,
         indate: this.indateVal,
@@ -291,6 +291,7 @@ export default {
       margin: 10px 0;
       max-height: 100px;
       overflow: auto;
+      word-break: break-word;
     }
     .tools {
       justify-content: flex-start;
