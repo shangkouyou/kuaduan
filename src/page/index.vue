@@ -3,7 +3,7 @@
     <div v-if="showHcontent" class="header-content">
       <span
         >所有新建内容有效期默认
-        <strong>仅有1小时</strong>，超时后即删除无法找回</span
+        <strong>仅有15分钟</strong>，超时后即删除无法找回</span
       >
       <a @click="doDelHcontent" class="del-hconent">
         <i class="iconfont iconguanbi"></i
@@ -29,13 +29,13 @@
             v-for="(item, index) in saveIndate"
             :key="index"
             :class="{ on: isActive === index }"
-            @click="doSetIndate(index,item)"
+            @click="doSetIndate(index, item)"
           >
             <a-tooltip placement="bottom">
               <template slot="title">
                 <span>{{ item }}小时有效期</span>
               </template>
-              {{ item }}小时
+              {{ item }}分钟
             </a-tooltip>
           </a>
         </div>
@@ -111,6 +111,7 @@
 import Vue from "vue";
 import VueQrcode from "vue-qrcode";
 import clipboard from "clipboard";
+// import FastScanner from 'fastscan';
 Vue.prototype.clipboard = clipboard;
 import {
   addContentApi,
@@ -128,7 +129,7 @@ export default {
       qrcodeValue: "",
       showHcontent: true,
       visible: false,
-      saveIndate: [1, 3, 5],
+      saveIndate: [15],
       indateVal: 1,
       dataList: [],
       isActive: 0,
@@ -190,7 +191,7 @@ export default {
       this.visible = true;
       this.qrcodeValue = text;
     },
-    doSetIndate(index,item) {
+    doSetIndate(index, item) {
       this.indateVal = item;
       this.isActive = index;
     },
@@ -270,7 +271,7 @@ export default {
       text-align: left;
       padding: 10px 0;
       display: block;
-      padding: 10px;
+      padding: 15px;
       margin-bottom: 15px;
       &:hover {
         box-shadow: 0 3px 30px rgba(0, 0, 0, 0.15);
@@ -294,13 +295,14 @@ export default {
       word-break: break-word;
     }
     .tools {
+      position: relative;
       justify-content: flex-start;
       > a {
         margin-right: 20px;
         transform: translateY(0);
         transition: transform ease 0.3s;
-        &:last-child{
-          margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
         }
         &:hover {
           transform: translateY(-3px);
