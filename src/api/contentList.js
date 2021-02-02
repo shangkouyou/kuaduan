@@ -15,3 +15,5 @@ export function getItemByIdApi(params) {
 export function deleteListItemByIdApi(params) {
   return axios.post(`${module}deleteListItemById`, params, { encode: true });
 }
+
+export const captchaUrl = `${module}captcha`

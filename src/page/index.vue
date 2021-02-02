@@ -16,7 +16,7 @@
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
-            maxlength="1000"
+            maxlength="100"
             @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
@@ -24,6 +24,7 @@
           <a v-show="words" @click="doClearForm">
             <i class="iconfont iconguanbi"></i>
           </a>
+          <div class="captcha"><img @click="changeCaptch" :src="captchaUrl" alt="" /></div>
         </div>
         <div class="save-indate box">
           <a
@@ -65,7 +66,7 @@
                 <i class="iconfont iconicon-1"></i>
               </a>
             </a-tooltip>
-            <!-- <a-tooltip placement="top">
+            <a-tooltip placement="top">
               <template slot="title">
                 <span>删除</span>
               </template>
@@ -80,7 +81,8 @@
                   <i class="iconfont iconshanchu"></i>
                 </a>
               </a-popconfirm>
-            </a-tooltip> -->
+            </a-tooltip>
+            <!-- <div class="del-content-item">{{ momentFormat(item.createTime) }}</div> -->
           </div>
           <h1 @click="doCopyWord" class="title">
             {{ item.content }}
@@ -92,8 +94,8 @@
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-            <i class="iconfont icondaojishi"></i>
-            {{remaining(item)}} 后删除
+              <i class="iconfont icondaojishi"></i>
+              {{ remaining(item) }} 后删除
             </div>
           </div>
         </a>
@@ -119,10 +121,10 @@ import {
   addContentApi,
   getContentListApi,
   deleteListItemByIdApi,
+  captchaUrl,
 } from "@/api/contentList";
 import { timeFormat } from "@/commons/times";
 import moment from "moment";
-
 
 export default {
   name: "HelloWorld",
@@ -133,10 +135,11 @@ export default {
       qrcodeValue: "",
       showHcontent: true,
       visible: false,
-      saveIndate: [1,3,5],
+      saveIndate: [1, 3, 5],
       indateVal: 1,
       dataList: [],
       isActive: 0,
+      captchaUrl,
     };
   },
   components: {
@@ -146,15 +149,15 @@ export default {
     this.getContentList();
   },
   methods: {
-    momentFormat(time){
-      return moment(time).format('YYYY-MM-DD hh:mm:ss')
+    momentFormat(time) {
+      return moment(time).format("YYYY-MM-DD hh:mm:ss");
     },
     timeFormat(time) {
-      const tt = new Date(time).getTime()
+      const tt = new Date(time).getTime();
       return timeFormat(tt);
     },
     doSubmitData() {
-      if (!this.words) return;
+      if (!this.words.trim()) return;
       let params = {
         content: this.words,
         indate: this.indateVal,
@@ -203,8 +206,13 @@ export default {
       this.indateVal = item;
       this.isActive = index;
     },
-    remaining(item){
-      return moment(item.createTime).add(item.indate, 'h').format('hh:mm');
+    remaining(item) {
+      return moment(item.createTime)
+        .add(item.indate, "h")
+        .format("hh:mm");
+    },
+    changeCaptch(){
+      this.captchaUrl += `?r=${new Date().getTime()}`
     }
   },
 };
