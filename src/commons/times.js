@@ -8,4 +8,5 @@ export function timeFormat(timestamp) {
       return inm + arrr[i] + '前';
     }
   }
+  return '1秒前'
 }

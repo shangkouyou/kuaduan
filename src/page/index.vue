@@ -3,7 +3,7 @@
     <div v-if="showHcontent" class="header-content">
       <span
         >所有新建内容有效期默认
-        <strong>仅有15分钟</strong>，超时后即删除无法找回</span
+        <strong>仅有1小时</strong>，超时后即删除无法找回</span
       >
       <a @click="doDelHcontent" class="del-hconent">
         <i class="iconfont iconguanbi"></i
@@ -16,6 +16,7 @@
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
+            maxlength="1000"
             @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
@@ -35,7 +36,7 @@
               <template slot="title">
                 <span>{{ item }}小时有效期</span>
               </template>
-              {{ item }}分钟
+              {{ item }}小时
             </a-tooltip>
           </a>
         </div>
@@ -64,7 +65,7 @@
                 <i class="iconfont iconicon-1"></i>
               </a>
             </a-tooltip>
-            <a-tooltip placement="top">
+            <!-- <a-tooltip placement="top">
               <template slot="title">
                 <span>删除</span>
               </template>
@@ -79,23 +80,24 @@
                   <i class="iconfont iconshanchu"></i>
                 </a>
               </a-popconfirm>
-            </a-tooltip>
+            </a-tooltip> -->
           </div>
           <h1 @click="doCopyWord" class="title">
             {{ item.content }}
           </h1>
           <div class="info box">
             <div class="created-time box">
-              <i class="iconfont iconshijian"></i
-              >{{ timeFormat(item.createTime) }}
+              <i class="iconfont iconshijian"></i>
+              {{ timeFormat(item.createTime) }}
             </div>
             <div class="word-space">|</div>
             <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>1小时5分后删除
+            <i class="iconfont icondaojishi"></i>
+            {{remaining(item)}} 后删除
             </div>
           </div>
         </a>
-        <div class="load-end">- 到底了 -</div>
+        <!-- <div class="load-end">- 到底了 -</div> -->
       </div>
     </div>
 
@@ -119,6 +121,8 @@ import {
   deleteListItemByIdApi,
 } from "@/api/contentList";
 import { timeFormat } from "@/commons/times";
+import moment from "moment";
+
 
 export default {
   name: "HelloWorld",
@@ -129,7 +133,7 @@ export default {
       qrcodeValue: "",
       showHcontent: true,
       visible: false,
-      saveIndate: [15],
+      saveIndate: [1,3,5],
       indateVal: 1,
       dataList: [],
       isActive: 0,
@@ -142,8 +146,12 @@ export default {
     this.getContentList();
   },
   methods: {
+    momentFormat(time){
+      return moment(time).format('YYYY-MM-DD hh:mm:ss')
+    },
     timeFormat(time) {
-      return timeFormat(new Date(time).getTime());
+      const tt = new Date(time).getTime()
+      return timeFormat(tt);
     },
     doSubmitData() {
       if (!this.words) return;
@@ -195,6 +203,9 @@ export default {
       this.indateVal = item;
       this.isActive = index;
     },
+    remaining(item){
+      return moment(item.createTime).add(item.indate, 'h').format('hh:mm');
+    }
   },
 };
 </script>
