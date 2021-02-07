@@ -12,19 +12,21 @@
     <div class="page-body">
       <div class="editor">
         <div class="input-form box" :class="inputClass">
+          <div class="captcha">
+            <img @click="changeCaptch" :src="captchaUrl" alt="" />
+          </div>
           <input
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
-            maxlength="100"
+            maxlength="1000"
             @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
           />
-          <a v-show="words" @click="doClearForm">
+          <a v-show="words" class="clear-val" @click="doClearForm">
             <i class="iconfont iconguanbi"></i>
           </a>
-          <div class="captcha"><img @click="changeCaptch" :src="captchaUrl" alt="" /></div>
         </div>
         <div class="save-indate box">
           <a
@@ -82,7 +84,6 @@
                 </a>
               </a-popconfirm>
             </a-tooltip>
-            <!-- <div class="del-content-item">{{ momentFormat(item.createTime) }}</div> -->
           </div>
           <h1 @click="doCopyWord" class="title">
             {{ item.content }}
@@ -96,6 +97,9 @@
             <div class="del-time box">
               <i class="iconfont icondaojishi"></i>
               {{ remaining(item) }} 后删除
+            </div>
+            <div class="del-content-item">
+              {{ momentFormat(item.createTime) }}
             </div>
           </div>
         </a>
@@ -150,7 +154,7 @@ export default {
   },
   methods: {
     momentFormat(time) {
-      return moment(time).format("YYYY-MM-DD hh:mm:ss");
+      return moment(time).format("hh:mm");
     },
     timeFormat(time) {
       const tt = new Date(time).getTime();
@@ -211,9 +215,9 @@ export default {
         .add(item.indate, "h")
         .format("hh:mm");
     },
-    changeCaptch(){
-      this.captchaUrl += `?r=${new Date().getTime()}`
-    }
+    changeCaptch() {
+      this.captchaUrl += `?r=${new Date().getTime()}`;
+    },
   },
 };
 </script>
@@ -254,6 +258,13 @@ export default {
         color: #5551ff;
         font-size: 20px;
         font-weight: 900;
+      }
+      .captcha {
+        width: 83px;
+        margin-right: 5px;
+      }
+      .clear-val {
+        margin-right: 5px;
       }
       &.focus {
         border-color: #5551ff;
@@ -330,6 +341,7 @@ export default {
       }
     }
     .info {
+      position: relative;
       font-size: 12px;
       justify-content: flex-start;
       .created-time {
