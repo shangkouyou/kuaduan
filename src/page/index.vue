@@ -1,13 +1,15 @@
 <template>
   <div class="index-page">
-    <div v-if="showHcontent" class="header-content">
+    <div v-if="showHcontent" class="header-content bottom-shadow">
       <span
         >所有新建内容有效期默认
-        <strong>仅有1小时</strong>，超时后即删除无法找回</span
-      >
-      <a @click="doDelHcontent" class="del-hconent">
-        <i class="iconfont iconguanbi"></i
-      ></a>
+        <strong>仅有1小时</strong>，超时后即删除无法找回</span>
+      <div class="header-content-right box bottom-shadow">
+        <div class="skew-box bottom-shadow"></div>
+        <a @click="doDelHcontent" class="del-hconent">
+          <i class="iconfont iconguanbi"></i>
+        </a>
+      </div>
     </div>
     <div class="page-body">
       <div class="editor">
@@ -68,7 +70,7 @@
                 <i class="iconfont iconicon-1"></i>
               </a>
             </a-tooltip>
-            <a-tooltip placement="top">
+            <!-- <a-tooltip placement="top">
               <template slot="title">
                 <span>删除</span>
               </template>
@@ -83,7 +85,7 @@
                   <i class="iconfont iconshanchu"></i>
                 </a>
               </a-popconfirm>
-            </a-tooltip>
+            </a-tooltip> -->
           </div>
           <h1 @click="doCopyWord" class="title">
             {{ item.content }}
@@ -96,10 +98,7 @@
             <div class="word-space">|</div>
             <div class="del-time box">
               <i class="iconfont icondaojishi"></i>
-              {{ remaining(item) }} 后删除
-            </div>
-            <div class="del-content-item">
-              {{ momentFormat(item.createTime) }}
+              {{ remaining(item) }} 后过期
             </div>
           </div>
         </a>
@@ -232,15 +231,36 @@ export default {
 .index-page {
   height: 100%;
   .header-content {
+    position: relative;
     font-size: 14px;
     text-align: center;
-    padding: 12px 50px;
+    padding: 12px 60px;
     position: relative;
-    color: rgb(0, 0, 0);
-    background: rgb(199, 185, 255);
+    color: #fff;
+    background: #0f69ff;
+    background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
+    // background: rgb(199, 185, 255);
+    .header-content-right{
+      position:absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 100px;
+      background: #188fff;
+      background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
+      .skew-box{
+        position: absolute;
+        left: -9px;
+        height: 100%;
+        background: #188fff;
+        background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
+        width: 36px;
+        transform: skew(-22deg);
+      }
+    }
     .del-hconent {
       position: absolute;
-      right: 20px;
+      right: 36px;
       color: #fff;
     }
   }
