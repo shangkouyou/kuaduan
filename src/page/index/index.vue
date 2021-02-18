@@ -3,7 +3,8 @@
     <div v-if="showHcontent" class="header-content bottom-shadow">
       <span
         >所有新建内容有效期默认
-        <strong>仅有1小时</strong>，超时后即删除无法找回</span>
+        <strong>仅有1小时</strong>，超时后即删除无法找回</span
+      >
       <div class="header-content-right box bottom-shadow">
         <div class="skew-box bottom-shadow"></div>
         <a @click="doDelHcontent" class="del-hconent">
@@ -14,9 +15,9 @@
     <div class="page-body">
       <div class="editor">
         <div class="input-form box" :class="inputClass">
-          <div class="captcha">
+          <!-- <div class="captcha">
             <img @click="changeCaptch" :src="captchaUrl" alt="" />
-          </div>
+          </div> -->
           <input
             @focus="onFocus"
             @blur="onBlur"
@@ -49,27 +50,17 @@
       <div class="content-item">
         <a v-for="(item, index) in dataList" :key="index">
           <div class="box tools">
-            <a-tooltip placement="top">
-              <template slot="title">
-                <span>复制内容</span>
-              </template>
-              <a
-                data-clipboard-action="copy"
-                :data-clipboard-text="item.content"
-                class="cobyOrderSn"
-                @click="doCopyWord"
-              >
-                <i class="iconfont iconfuzhi1"></i>
-              </a>
-            </a-tooltip>
-            <a-tooltip placement="top">
-              <template slot="title">
-                <span>在手机上查看</span>
-              </template>
-              <a @click="doQRCode(item.content)">
-                <i class="iconfont iconicon-1"></i>
-              </a>
-            </a-tooltip>
+            <clipboard ref="rCBoard" :item="item"></clipboard>
+            <qrcode :item="item"></qrcode>
+            <a @click="doGotoDetail(item._id)" class="del-content-item goto">
+              <i class="iconfont iconyoujiantou1"></i>
+            </a>
+          </div>
+          <h1 class="title">
+            {{ item.content }}
+          </h1>
+          <div class="info box">
+            <timeBoard :item="item"></timeBoard>
             <!-- <a-tooltip placement="top">
               <template slot="title">
                 <span>删除</span>
@@ -87,93 +78,98 @@
               </a-popconfirm>
             </a-tooltip> -->
           </div>
-          <h1 @click="doCopyWord" class="title">
-            {{ item.content }}
-          </h1>
-          <div class="info box">
-            <div class="created-time box">
-              <i class="iconfont iconshijian"></i>
-              {{ timeFormat(item.createTime) }}
-            </div>
-            <div class="word-space">|</div>
-            <div class="del-time box">
-              <i class="iconfont icondaojishi"></i>
-              {{ remaining(item) }} 后过期
-            </div>
-          </div>
         </a>
+        <a-pagination
+          v-model="pagination.page"
+          :pageSize="pagination.limit"
+          :total="pagination.total"
+          :hideOnSinglePage="true"
+          @change="onPageChange"
+        />
         <!-- <div class="load-end">- 到底了 -</div> -->
       </div>
     </div>
-
-    <a-modal :width="260" v-model="visible" :footer="null" :title="null">
-      <div class="box">
-        <vue-qrcode :value="qrcodeValue" />
-      </div>
-    </a-modal>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-import VueQrcode from "vue-qrcode";
-import clipboard from "clipboard";
-// import FastScanner from 'fastscan';
-Vue.prototype.clipboard = clipboard;
+import FastScanner from "fastscan";
 import {
   addContentApi,
   getContentListApi,
   deleteListItemByIdApi,
   captchaUrl,
 } from "@/api/contentList";
-import { timeFormat } from "@/commons/times";
-import moment from "moment";
+import timeBoard from "./components/timeBoard.vue";
+import qrcode from "./components/qrcode.vue";
+import clipboard from "./components/clipboard.vue";
+
+let scanner = null;
 
 export default {
-  name: "HelloWorld",
+  name: "indexPage",
   data() {
     return {
       inputClass: "",
       words: "",
-      qrcodeValue: "",
       showHcontent: true,
-      visible: false,
       saveIndate: [1, 3, 5],
       indateVal: 1,
       dataList: [],
       isActive: 0,
       captchaUrl,
+      pagination: {
+        page: 1,
+        limit: 20,
+      },
+      sensitivitys : '今日头条,微信,支付宝'
     };
   },
   components: {
-    VueQrcode,
+    timeBoard,
+    qrcode,
+    clipboard,
   },
   mounted() {
     this.getContentList();
   },
   methods: {
-    momentFormat(time) {
-      return moment(time).format("hh:mm");
-    },
-    timeFormat(time) {
-      const tt = new Date(time).getTime();
-      return timeFormat(tt);
+    rebuild() {
+      let words = this.sensitivitys
+        .replace(new RegExp("，", "g"), ",")
+        .replace(new RegExp("\\n", "g"), ",")
+        .split(",");
+      words = words.map((word) => {
+          return word.trim();
+        }).filter((word) => {
+          return word.length > 0;
+        });
+        scanner = new FastScanner(words)
+        return scanner.search(this.words)
     },
     doSubmitData() {
       if (!this.words.trim()) return;
+
+      console.log(this.rebuild())
+
       let params = {
         content: this.words,
         indate: this.indateVal,
       };
+
       addContentApi(params).then(() => {
         this.$message.success("提交成功");
         this.words = "";
         this.getContentList();
       });
     },
-    getContentList() {
-      getContentListApi().then((res) => {
-        this.dataList = res;
+    getContentList(isInit) {
+      if (isInit) {
+        this.pagination.page = 1;
+      }
+      getContentListApi(this.pagination).then((res) => {
+        this.dataList = res.docs;
+        this.pagination.total = res.total;
       });
     },
     doDelContentItem(id) {
@@ -191,28 +187,20 @@ export default {
     doClearForm() {
       this.words = "";
     },
-    doCopyWord() {
-      let clipboard = new this.clipboard(".cobyOrderSn");
-      clipboard.on("success", () => {
-        this.$message.destroy();
-        this.$message.success("复制成功");
-      });
-    },
     doDelHcontent() {
       this.showHcontent = false;
     },
-    doQRCode(text) {
-      this.visible = true;
-      this.qrcodeValue = text;
+    doGotoDetail(id) {
+      this.$router.push(`/detail/${id}`);
     },
     doSetIndate(index, item) {
       this.indateVal = item;
       this.isActive = index;
     },
-    remaining(item) {
-      return moment(item.createTime)
-        .add(item.indate, "h")
-        .format("hh:mm");
+    onPageChange(page) {
+      this.pagination.page = page;
+      this.getContentList();
+      window.scrollTo(0, 0);
     },
     changeCaptch() {
       this.captchaUrl += `?r=${new Date().getTime()}`;
@@ -238,22 +226,34 @@ export default {
     position: relative;
     color: #fff;
     background: #0f69ff;
-    background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
+    background-image: linear-gradient(
+      to bottom,
+      transparent 80%,
+      rgba(0, 0, 0, 0.15)
+    );
     // background: rgb(199, 185, 255);
-    .header-content-right{
-      position:absolute;
+    .header-content-right {
+      position: absolute;
       top: 0;
       right: 0;
       height: 100%;
       width: 100px;
       background: #188fff;
-      background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
-      .skew-box{
+      background-image: linear-gradient(
+        to bottom,
+        transparent 80%,
+        rgba(0, 0, 0, 0.15)
+      );
+      .skew-box {
         position: absolute;
         left: -9px;
         height: 100%;
         background: #188fff;
-        background-image: linear-gradient(to bottom,transparent 80%,rgba(0,0,0,.15));
+        background-image: linear-gradient(
+          to bottom,
+          transparent 80%,
+          rgba(0, 0, 0, 0.15)
+        );
         width: 36px;
         transform: skew(-22deg);
       }
@@ -323,10 +323,18 @@ export default {
       display: block;
       padding: 15px;
       margin-bottom: 15px;
+      cursor: default;
       &:hover {
         box-shadow: 0 3px 30px rgba(0, 0, 0, 0.15);
         transition: all ease 0.4s;
         border-bottom: none;
+      }
+    }
+    .goto {
+      .iconfont {
+        font-size: 18px;
+        color: #888;
+        color: #888;
       }
     }
     .del-content-item {
@@ -363,26 +371,17 @@ export default {
     .info {
       position: relative;
       font-size: 12px;
-      justify-content: flex-start;
-      .created-time {
-        color: #888;
-      }
-      .word-space {
-        margin: 0 15px;
-        color: #888;
-      }
-      .del-time {
-        color: #888;
-      }
-      .iconfont {
-        margin-right: 3px;
-      }
+      justify-content: space-between;
     }
   }
   .load-end {
     font-size: 14px;
     color: #888;
     text-align: center;
+  }
+  /deep/ .ant-pagination {
+    text-align: center;
+    margin-top: 30px;
   }
 }
 </style>

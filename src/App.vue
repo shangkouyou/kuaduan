@@ -1,15 +1,11 @@
 <template>
   <div id="app">
-    <indexPage/>
+  <router-view></router-view>
   </div>
 </template>
 
 <script>
-import indexPage from './page/index.vue'
 export default {
-  name: 'App',
-  components: {
-    indexPage
-  }
+  name: 'App'
 }
 </script>
