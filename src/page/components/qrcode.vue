@@ -14,6 +14,7 @@
       <div class="box">
         <vue-qrcode :value="qrcodeValue" />
       </div>
+      <div class="box qr-text">用手机扫一扫</div>
     </a-modal>
   </div>
 </template>
@@ -50,3 +51,9 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+.qr-text{
+  font-size: 14px;
+  color:#888;
+}
+</style>
