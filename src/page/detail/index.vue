@@ -1,5 +1,6 @@
 <template>
   <div class="detail-page">
+    <cAlert></cAlert>
     <div class="viewer">
       {{ detailData.content }}
     </div>
@@ -8,6 +9,7 @@
 
 <script>
 import { getItemByIdApi } from "@/api/contentList";
+import cAlert from "../components/alert.vue";
 
 export default {
   name: "detailPage",
@@ -15,6 +17,9 @@ export default {
     return {
       detailData: {},
     };
+  },
+  components: {
+    cAlert,
   },
   mounted() {
     this.init();

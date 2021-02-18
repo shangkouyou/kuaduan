@@ -46,19 +46,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-.created-time {
-  color: #888;
-}
-.word-space {
-  margin: 0 15px;
-  color: #888;
-}
-.del-time {
-  color: #888;
-}
-.iconfont {
-  margin-right: 3px;
-}
-</style>

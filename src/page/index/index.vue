@@ -1,17 +1,6 @@
 <template>
   <div class="index-page">
-    <div v-if="showHcontent" class="header-content bottom-shadow">
-      <span
-        >所有新建内容有效期默认
-        <strong>仅有1小时</strong>，超时后即删除无法找回</span
-      >
-      <div class="header-content-right box bottom-shadow">
-        <div class="skew-box bottom-shadow"></div>
-        <a @click="doDelHcontent" class="del-hconent">
-          <i class="iconfont iconguanbi"></i>
-        </a>
-      </div>
-    </div>
+    <cAlert></cAlert>
     <div class="page-body">
       <div class="editor">
         <div class="input-form box" :class="inputClass">
@@ -100,9 +89,10 @@ import {
   deleteListItemByIdApi,
   captchaUrl,
 } from "@/api/contentList";
-import timeBoard from "./components/timeBoard.vue";
-import qrcode from "./components/qrcode.vue";
-import clipboard from "./components/clipboard.vue";
+import timeBoard from "../components/timeBoard.vue";
+import qrcode from "../components/qrcode.vue";
+import clipboard from "../components/clipboard.vue";
+import cAlert from "../components/alert.vue";
 
 let scanner = null;
 
@@ -112,7 +102,6 @@ export default {
     return {
       inputClass: "",
       words: "",
-      showHcontent: true,
       saveIndate: [1, 3, 5],
       indateVal: 1,
       dataList: [],
@@ -122,13 +111,15 @@ export default {
         page: 1,
         limit: 20,
       },
-      sensitivitys : '今日头条,微信,支付宝'
+      invitation: "",
+      sensitivitys: "今日头条,微信,支付宝",
     };
   },
   components: {
     timeBoard,
     qrcode,
     clipboard,
+    cAlert,
   },
   mounted() {
     this.getContentList();
@@ -139,28 +130,33 @@ export default {
         .replace(new RegExp("，", "g"), ",")
         .replace(new RegExp("\\n", "g"), ",")
         .split(",");
-      words = words.map((word) => {
+      words = words
+        .map((word) => {
           return word.trim();
-        }).filter((word) => {
+        })
+        .filter((word) => {
           return word.length > 0;
         });
-        scanner = new FastScanner(words)
-        return scanner.search(this.words)
+      scanner = new FastScanner(words);
+      return scanner.search(this.words);
     },
     doSubmitData() {
       if (!this.words.trim()) return;
 
-      console.log(this.rebuild())
+      console.log(this.rebuild());
 
       let params = {
         content: this.words,
         indate: this.indateVal,
+        _csrf: this.invitation,
       };
 
       addContentApi(params).then(() => {
         this.$message.success("提交成功");
         this.words = "";
         this.getContentList();
+      }).catch(() => {
+        this.$message.error("提交失败，请稍后再试");
       });
     },
     getContentList(isInit) {
@@ -169,11 +165,14 @@ export default {
       }
       getContentListApi(this.pagination).then((res) => {
         this.dataList = res.docs;
+        this.invitation = res.invitation;
         this.pagination.total = res.total;
+      }).catch(() => {
+        this.$message.error("加载失败，请稍后再试");
       });
     },
     doDelContentItem(id) {
-      deleteListItemByIdApi({ _id: id }).then(() => {
+      deleteListItemByIdApi({ _id: id, _csrf: this.invitation }).then(() => {
         this.$message.success("删除成功");
         this.getContentList();
       });
@@ -186,9 +185,6 @@ export default {
     },
     doClearForm() {
       this.words = "";
-    },
-    doDelHcontent() {
-      this.showHcontent = false;
     },
     doGotoDetail(id) {
       this.$router.push(`/detail/${id}`);
@@ -218,52 +214,7 @@ export default {
 }
 .index-page {
   height: 100%;
-  .header-content {
-    position: relative;
-    font-size: 14px;
-    text-align: center;
-    padding: 12px 60px;
-    position: relative;
-    color: #fff;
-    background: #0f69ff;
-    background-image: linear-gradient(
-      to bottom,
-      transparent 80%,
-      rgba(0, 0, 0, 0.15)
-    );
-    // background: rgb(199, 185, 255);
-    .header-content-right {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 100px;
-      background: #188fff;
-      background-image: linear-gradient(
-        to bottom,
-        transparent 80%,
-        rgba(0, 0, 0, 0.15)
-      );
-      .skew-box {
-        position: absolute;
-        left: -9px;
-        height: 100%;
-        background: #188fff;
-        background-image: linear-gradient(
-          to bottom,
-          transparent 80%,
-          rgba(0, 0, 0, 0.15)
-        );
-        width: 36px;
-        transform: skew(-22deg);
-      }
-    }
-    .del-hconent {
-      position: absolute;
-      right: 36px;
-      color: #fff;
-    }
-  }
+
   .page-body {
     padding: 10px;
     max-width: 640px;
