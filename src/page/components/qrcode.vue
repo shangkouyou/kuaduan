@@ -41,7 +41,11 @@ export default {
   methods: {
     doQRCode(text) {
       this.visible = true;
-      this.qrcodeValue = text;
+      if( text.length > 100 ){
+        this.qrcodeValue = `http://127.0.0.1:8099/#/detail/${this.item._id}`;
+      }else{
+        this.qrcodeValue = text;
+      }
     },
   },
 };
