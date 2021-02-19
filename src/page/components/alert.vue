@@ -60,7 +60,7 @@ export default {
       );
       .skew-box {
         position: absolute;
-        left: -9px;
+        left: -18px;
         height: 100%;
         background: #188fff;
         background-image: linear-gradient(

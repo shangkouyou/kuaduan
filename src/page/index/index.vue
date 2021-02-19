@@ -144,8 +144,6 @@ export default {
     doSubmitData() {
       if (!this.words.trim()) return;
 
-      console.log(this.rebuild());
-
       let params = {
         content: this.words,
         indate: this.indateVal,
@@ -155,7 +153,7 @@ export default {
       addContentApi(params).then(() => {
         this.$message.success("提交成功");
         this.words = "";
-        this.getContentList();
+        this.getContentList(true);
       }).catch(() => {
         this.$message.error("提交失败，请稍后再试");
       });
@@ -333,7 +331,7 @@ export default {
   }
   /deep/ .ant-pagination {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 }
 </style>
