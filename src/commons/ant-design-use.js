@@ -1,5 +1,6 @@
 /* eslint-disable */
 import {
+  Button ,
   Modal ,
   Empty,
   message,
@@ -9,6 +10,7 @@ import {
   BackTop,
 } from 'ant-design-vue'
 import Vue from 'vue'
+Vue.use(Button)
 Vue.use(Modal)
 Vue.use(Empty)
 Vue.use(Tooltip)

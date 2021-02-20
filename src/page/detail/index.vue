@@ -11,9 +11,7 @@
           <timeBoard :item="detailData"></timeBoard>
         </div>
       </div>
-      <div v-if="detailData.content" class="detail-content">
-        {{ detailData.content }}
-      </div>
+      <div v-if="detailData.content" class="detail-content" v-html="detailData.content"></div>
       <div v-if="!detailData.content" class="no-data box">
         <div><i class="iconfont iconku"></i></div>
         <div>

@@ -7,7 +7,15 @@
           <!-- <div class="captcha">
             <img @click="changeCaptch" :src="captchaUrl" alt="" />
           </div> -->
-          <input
+          <div
+            class="input-container"
+            maxlength="5"
+            contenteditable="true"
+            ref="rInput"
+            @input="onDataChange"
+            :placeholder="placeholder"
+          ></div>
+          <!-- <input
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
@@ -15,43 +23,56 @@
             @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
-          />
+          /> -->
           <a v-show="words" class="clear-val" @click="doClearForm">
             <i class="iconfont iconguanbi"></i>
           </a>
         </div>
-        <div class="save-indate box">
-          <a
-            v-for="(item, index) in saveIndate"
-            :key="index"
-            :class="{ on: isActive === index }"
-            @click="doSetIndate(index, item)"
-          >
-            <a-tooltip placement="bottom">
-              <template slot="title">
-                <span>{{ item }}小时有效期</span>
-              </template>
-              {{ item }}小时
-            </a-tooltip>
-          </a>
+        <div class="box form-btn">
+          <div class="save-indate box">
+            <a
+              v-for="(item, index) in saveIndate"
+              :key="index"
+              :class="{ on: isActive === index }"
+              @click="doSetIndate(index, item)"
+            >
+              <a-tooltip placement="bottom">
+                <template slot="title">
+                  <span>{{ item }}小时有效期</span>
+                </template>
+                {{ item }}小时
+              </a-tooltip>
+            </a>
+          </div>
+          <div>
+            <a-button @click="doSubmitData" type="primary">
+              提交
+            </a-button>
+          </div>
         </div>
       </div>
       <div class="content-item">
-        <a v-for="(item, index) in dataList" :key="index">
+        <a v-for="item in dataList" :key="item._id">
           <div class="box tools">
-            <clipboard ref="rCBoard" :item="item"></clipboard>
+            <clipboard
+              ref="rCBoard"
+              :EleId="`contentviewer-${item._id}`"
+            ></clipboard>
             <qrcode :item="item"></qrcode>
-            <deleter 
-            :invitation="invitation" 
-            :id="item._id" 
-            @deleted="getContentList" ></deleter>
+            <deleter
+              :invitation="invitation"
+              :id="item._id"
+              @deleted="getContentList"
+            ></deleter>
             <a @click="doGotoDetail(item._id)" class="del-content-item goto">
               <i class="iconfont iconyoujiantou1"></i>
             </a>
           </div>
-          <h1 class="title">
-            {{ item.content }}
-          </h1>
+          <!-- <h1 class="title"></h1> -->
+          <div
+            class="content-viewer"
+            :id="`contentviewer-${item._id}`"
+            v-html="item.content"></div>
           <div class="info box">
             <timeBoard :item="item"></timeBoard>
           </div>
@@ -84,6 +105,7 @@ import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 
 let scanner = null;
+const TABLE_LABEL = "在此输入内容";
 
 export default {
   name: "indexPage",
@@ -102,8 +124,9 @@ export default {
       },
       invitation: "",
       sensitivitys: "今日头条,微信,支付宝",
-      timer : null,
-      isSubmit : false,
+      timer: null,
+      isSubmit: false,
+      placeholder: TABLE_LABEL,
     };
   },
   components: {
@@ -132,46 +155,59 @@ export default {
       scanner = new FastScanner(words);
       return scanner.search(this.words);
     },
+    onDataChange() {
+      if (this.$refs.rInput.innerText) {
+        this.placeholder = "";
+      } else {
+        this.placeholder = TABLE_LABEL;
+      }
+    },
     doSubmitData() {
-      if (!this.words.trim()) return;
-      if( this.isSubmit ){
+      if (!this.$refs.rInput.innerText) return;
+      if (this.isSubmit) {
         this.$message.warning("您操作的太快了哦");
         return;
       }
 
+      console.log(this.$refs.rInput.innerHTML);
+
       let params = {
-        content: this.words,
+        content: this.$refs.rInput.innerHTML,
         indate: this.indateVal,
         _csrf: this.invitation,
       };
 
-      addContentApi(params).then(() => {
-        this.words = "";
-        this.getContentList(true);
-        this.preventSubmits();
-      }).catch(() => {
-        this.$message.error("提交失败，请稍后再试");
-      });
+      addContentApi(params)
+        .then(() => {
+          this.$refs.rInput.innerHTML = "";
+          this.getContentList(true);
+          this.preventSubmits();
+        })
+        .catch(() => {
+          this.$message.error("提交失败，请稍后再试");
+        });
     },
-    preventSubmits(){
+    preventSubmits() {
       this.isSubmit = true;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.isSubmit = false;
-      },2000)
+      }, 2000);
     },
     getContentList(isInit) {
       if (isInit) {
         this.pagination.page = 1;
       }
-      getContentListApi(this.pagination).then((res) => {
-        this.dataList = res.docs;
-        this.invitation = res.invitation;
-        this.pagination.total = res.total;
-        window.scrollTo(0, 0);
-      }).catch(() => {
-        this.$message.error("加载失败，请稍后再试");
-      });
+      getContentListApi(this.pagination)
+        .then((res) => {
+          this.dataList = res.docs;
+          this.invitation = res.invitation;
+          this.pagination.total = res.total;
+          window.scrollTo(0, 0);
+        })
+        .catch(() => {
+          this.$message.error("加载失败，请稍后再试");
+        });
     },
     onFocus() {
       this.inputClass = "focus";
@@ -218,8 +254,22 @@ export default {
   }
   .editor {
     padding: 30px 0;
+    .form-btn {
+      justify-content: space-between;
+    }
     .input-form {
       border-bottom: 2px solid var(--kd--font-color);
+      .input-container {
+        position: relative;
+        width: 100%;
+        padding: 3px 0;
+        max-height: 150px;
+        overflow: auto;
+        &::before {
+          content: attr(placeholder);
+          color: #888;
+        }
+      }
       .iconfont {
         color: var(--kd-theme-sub-color);
         font-size: 20px;
@@ -279,7 +329,7 @@ export default {
     .goto {
       .iconfont {
         font-size: 18px;
-        color: #888; 
+        color: #888;
       }
     }
     .del-content-item {
@@ -289,11 +339,10 @@ export default {
         color: #c10000;
       }
     }
-    .title {
-      font-size: 18px;
+    .content-viewer {
       line-height: 1.5;
       margin: 10px 0;
-      max-height: 100px;
+      max-height: 150px;
       overflow: auto;
       word-break: break-word;
     }

@@ -5,7 +5,7 @@
     </template>
     <a
       data-clipboard-action="copy"
-      :data-clipboard-text="item.content"
+      :data-clipboard-target="`#${EleId}`"
       class="cobyOrderSn"
       @click="doCopyWord"
     >
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-
 import Vue from "vue";
 import clipboard from "clipboard";
 Vue.prototype.clipboard = clipboard;
@@ -23,21 +22,21 @@ Vue.prototype.clipboard = clipboard;
 export default {
   name: "ValClipboard",
   props: {
-    item: {
-      type: Object,
+    EleId: {
+      type: String,
     },
   },
   data() {
     return {};
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     doCopyWord() {
       let clipboard = new this.clipboard(".cobyOrderSn");
-      clipboard.on("success", () => {
+      clipboard.on("success", (e) => {
         this.$message.destroy();
         this.$message.success("复制成功");
+        e.clearSelection();
       });
     },
   },
@@ -45,7 +44,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.cobyOrderSn{
+.cobyOrderSn {
   margin-right: 15px;
   color: var(--kd--gray-color);
 }
