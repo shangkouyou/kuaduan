@@ -114,6 +114,8 @@ export default {
       },
       invitation: "",
       sensitivitys: "今日头条,微信,支付宝",
+      timer : null,
+      isSubmit : false,
     };
   },
   components: {
@@ -143,6 +145,10 @@ export default {
     },
     doSubmitData() {
       if (!this.words.trim()) return;
+      if( this.isSubmit ){
+        this.$message.warning("您操作的太快了哦");
+        return;
+      }
 
       let params = {
         content: this.words,
@@ -151,12 +157,19 @@ export default {
       };
 
       addContentApi(params).then(() => {
-        this.$message.success("提交成功");
         this.words = "";
         this.getContentList(true);
+        this.preventSubmits();
       }).catch(() => {
         this.$message.error("提交失败，请稍后再试");
       });
+    },
+    preventSubmits(){
+      this.isSubmit = true;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.isSubmit = false;
+      },2000)
     },
     getContentList(isInit) {
       if (isInit) {
@@ -166,6 +179,7 @@ export default {
         this.dataList = res.docs;
         this.invitation = res.invitation;
         this.pagination.total = res.total;
+        window.scrollTo(0, 0);
       }).catch(() => {
         this.$message.error("加载失败，请稍后再试");
       });
@@ -195,7 +209,6 @@ export default {
     onPageChange(page) {
       this.pagination.page = page;
       this.getContentList();
-      window.scrollTo(0, 0);
     },
     changeCaptch() {
       this.captchaUrl += `?r=${new Date().getTime()}`;
