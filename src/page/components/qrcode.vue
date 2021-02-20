@@ -57,6 +57,6 @@ export default {
   color:#888;
 }
 .qr-code{
-  color:#666;
+  color:var(--kd--gray-color);
 }
 </style>

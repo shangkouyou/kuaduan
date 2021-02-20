@@ -1,50 +1,6 @@
-
 :root{
-
-    /* 主题色 */
-    --theme-color:#ff7171;
-
-    /* 默认颜色 */
-    --font-color:#333;
-    --bg-color:#fff;
-
-    /* 头部 */
-    --header-bg-color:var(--theme-color);
-
-    /* 输入框 */
-    --input-title-color:#fff;
-    --input-border-color:#999;
-    --input-border-radius:0;
-    --input-border-thick:1px;
-    --input-border-style:solid;
-
-    /* 按钮 */
-    --btn-font-color:#fff;
-    --btn-bg-color:#e85e57;
-    --btn-border-color:#666;
-    --btn-border-radius:5px;
-    --btn-border-thick:1px;
-    --btn-border-style:none;
-
-    /* 文本按钮 */
-    --text-btn-font-color:#fff;
-    --text-btn-text-decoration:none;
-
-    /* 主菜单 */
-    --main-menu-font-color:#fff;
-    --main-menu-font-size:12px;
-    --main-menu-bgcolor: #202533;
-    --main-menu-font-icon-size:32px;
-    --main-menu-icon-color: #fff;
-    --main-menu-icon-margin-bottom : 10px;
-
-    /* 菜单 */
-    --list-menu-font-color:#666;
-    --list-menu-font-size:12px;
-    --list-menu-column-num:33.33%;
-    --list-menu-box-shadow:0 6px 15px -3px #000;
-    --list-menu-border-radius: 100%;
-    --list-menu-icon-bgcolor: #fff;
-    --list-menu-icon-color: #105595;
-    --list-menu-icon-margin-bottom : 15px;
+    --kd-theme-color:#0f69ff;
+    --kd-theme-sub-color:#5551ff;
+    --kd--gray-color:#666;
+    --kd--font-color:#333;
 }

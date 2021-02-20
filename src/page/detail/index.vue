@@ -17,7 +17,7 @@
       <div v-if="!detailData.content" class="no-data box">
         <div><i class="iconfont iconku"></i></div>
         <div>
-          该文本已过期，您可以先前往首页 <a @click="gotoIndex">新建文本</a>
+          该文本已过期，您可以先前往首页 <a class="to-index-new" @click="gotoIndex">新建文本</a>
         </div>
       </div>
     </div>
@@ -73,12 +73,15 @@ export default {
   }
   .viewer {
     position: relative;
-    height: 300px;
+    min-height: 300px;
     width: 80%;
     margin: 30px auto;
     padding: 20px 40px;
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);
+    .to-index-new{
+      color: var(--kd-theme-sub-color);
+    }
   }
   .no-data {
     flex-flow: column;

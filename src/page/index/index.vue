@@ -11,7 +11,7 @@
             @focus="onFocus"
             @blur="onBlur"
             v-model="words"
-            maxlength="1000"
+            maxlength="3000"
             @keyup.enter="doSubmitData"
             placeholder="在此输入内容"
             type="text"
@@ -41,6 +41,10 @@
           <div class="box tools">
             <clipboard ref="rCBoard" :item="item"></clipboard>
             <qrcode :item="item"></qrcode>
+            <deleter 
+            :invitation="invitation" 
+            :id="item._id" 
+            @deleted="getContentList" ></deleter>
             <a @click="doGotoDetail(item._id)" class="del-content-item goto">
               <i class="iconfont iconyoujiantou1"></i>
             </a>
@@ -50,22 +54,6 @@
           </h1>
           <div class="info box">
             <timeBoard :item="item"></timeBoard>
-            <!-- <a-tooltip placement="top">
-              <template slot="title">
-                <span>删除</span>
-              </template>
-              <a-popconfirm
-                title="确认删除？"
-                ok-text="Yes"
-                placement="right"
-                @confirm="doDelContentItem(item._id)"
-                cancel-text="No"
-              >
-                <a class="del-content-item">
-                  <i class="iconfont iconshanchu"></i>
-                </a>
-              </a-popconfirm>
-            </a-tooltip> -->
           </div>
         </a>
         <a-pagination
@@ -87,13 +75,13 @@ import FastScanner from "fastscan";
 import {
   addContentApi,
   getContentListApi,
-  deleteListItemByIdApi,
   captchaUrl,
 } from "@/api/contentList";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
 import cAlert from "../components/alert.vue";
+import deleter from "../components/deleter.vue";
 
 let scanner = null;
 
@@ -123,6 +111,7 @@ export default {
     qrcode,
     clipboard,
     cAlert,
+    deleter,
   },
   mounted() {
     this.getContentList();
@@ -184,12 +173,6 @@ export default {
         this.$message.error("加载失败，请稍后再试");
       });
     },
-    doDelContentItem(id) {
-      deleteListItemByIdApi({ _id: id, _csrf: this.invitation }).then(() => {
-        this.$message.success("删除成功");
-        this.getContentList();
-      });
-    },
     onFocus() {
       this.inputClass = "focus";
     },
@@ -219,9 +202,9 @@ export default {
 
 <style lang="less" scoped>
 /deep/ a {
-  color: #333;
+  color: var(--kd--font-color);
   :hover {
-    color: #5551ff;
+    color: var(--kd-theme-sub-color);
   }
 }
 .index-page {
@@ -236,9 +219,9 @@ export default {
   .editor {
     padding: 30px 0;
     .input-form {
-      border-bottom: 2px solid #333;
+      border-bottom: 2px solid var(--kd--font-color);
       .iconfont {
-        color: #5551ff;
+        color: var(--kd-theme-sub-color);
         font-size: 20px;
         font-weight: 900;
       }
@@ -250,7 +233,7 @@ export default {
         margin-right: 5px;
       }
       &.focus {
-        border-color: #5551ff;
+        border-color: var(--kd-theme-sub-color);
       }
       input {
         font-size: 18px;
@@ -266,9 +249,9 @@ export default {
       a {
         margin-right: 20px;
         font-size: 12px;
-        color: #5551ff;
+        color: var(--kd-theme-sub-color);
         &.on {
-          border-bottom: 2px solid #5551ff;
+          border-bottom: 2px solid var(--kd-theme-sub-color);
         }
       }
     }
@@ -296,8 +279,7 @@ export default {
     .goto {
       .iconfont {
         font-size: 18px;
-        color: #888;
-        color: #888;
+        color: #888; 
       }
     }
     .del-content-item {
@@ -318,7 +300,7 @@ export default {
     .tools {
       position: relative;
       justify-content: flex-start;
-      > a {
+      > * {
         margin-right: 20px;
         transform: translateY(0);
         transition: transform ease 0.3s;

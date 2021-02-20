@@ -1,19 +1,18 @@
 import axios from 'axios'
 
-const module = '/api/v1/contentList/'
-// const module = 'http://13.229.242.5:7001/api/v1/pageList/'
+const module = '/data/index/contentList/textContent'
 
 export function addContentApi(params) {
-  return axios.post(`${module}addContent`, params, { encode: true });
+  return axios.post(module, params, { encode: true });
 }
 export function getContentListApi(params) {
-  return axios.get(`${module}getContentList`, { params }).then((res) => res.data);
+  return axios.get(module, { params }).then((res) => res.data);
 }
 export function getItemByIdApi(params) {
-  return axios.get(`${module}getItemById`, { params }).then((res) => res.data);
+  return axios.get(`${module}/${params._id}`).then((res) => res.data);
 }
-export function deleteListItemByIdApi(params) {
-  return axios.post(`${module}deleteListItemById`, params, { encode: true });
+export function deleteListItemByIdApi({ _id , _csrf }) {
+  return axios.delete(`${module}/${_id}`,{ params : { _csrf}});
 }
 
 export const captchaUrl = `${module}captcha`

@@ -8,11 +8,11 @@ module.exports = {
   devServer: {
     port : 8099,
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:7001/api',
+      '/data': {
+        target: 'http://127.0.0.1:7001/data',
         changOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/data': ''
         }
       },
     }

@@ -28,7 +28,6 @@ export default {
     };
   },
   mounted() {
-    console.log(moment().calendar())
   },
   methods: {
     timeFormat(time) {

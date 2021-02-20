@@ -39,7 +39,7 @@ export default {
     padding: 12px 60px;
     position: relative;
     color: #fff;
-    background: #0f69ff;
+    background: var(--kd-theme-color);
     background-image: linear-gradient(
       to bottom,
       transparent 80%,
@@ -52,7 +52,7 @@ export default {
       right: 0;
       height: 100%;
       width: 100px;
-      background: #188fff;
+      background: var(--kd-theme-color);
       background-image: linear-gradient(
         to bottom,
         transparent 80%,
@@ -62,7 +62,7 @@ export default {
         position: absolute;
         left: -18px;
         height: 100%;
-        background: #188fff;
+        background: var(--kd-theme-color);
         background-image: linear-gradient(
           to bottom,
           transparent 80%,
