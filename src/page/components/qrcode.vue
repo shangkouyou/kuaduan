@@ -5,7 +5,7 @@
       <template slot="title">
         <span>在手机上查看</span>
       </template>
-      <a @click="doQRCode(item.content)">
+      <a class="qr-code" @click="doQRCode(item.content)">
         <i class="iconfont iconicon-1"></i>
       </a>
     </a-tooltip>
@@ -55,5 +55,8 @@ export default {
 .qr-text{
   font-size: 14px;
   color:#888;
+}
+.qr-code{
+  color:#666;
 }
 </style>

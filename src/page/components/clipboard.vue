@@ -43,3 +43,10 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+.cobyOrderSn{
+  margin-right: 15px;
+  color: #666;
+}
+</style>

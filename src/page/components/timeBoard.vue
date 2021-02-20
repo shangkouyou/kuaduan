@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.box{
+  font-size: 12px;
+}
 .created-time {
   color: #888;
 }

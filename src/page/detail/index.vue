@@ -2,7 +2,24 @@
   <div class="detail-page">
     <cAlert></cAlert>
     <div class="viewer">
-      {{ detailData.content }}
+      <div v-if="detailData.content" class="box tools">
+        <div class="box">
+          <clipboard ref="rCBoard" :item="detailData"></clipboard>
+          <qrcode :item="detailData"></qrcode>
+        </div>
+        <div>
+          <timeBoard :item="detailData"></timeBoard>
+        </div>
+      </div>
+      <div v-if="detailData.content" class="detail-content">
+        {{ detailData.content }}
+      </div>
+      <div v-if="!detailData.content" class="no-data box">
+        <div><i class="iconfont iconku"></i></div>
+        <div>
+          该文本已过期，您可以先前往首页 <a @click="gotoIndex">新建文本</a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -10,6 +27,9 @@
 <script>
 import { getItemByIdApi } from "@/api/contentList";
 import cAlert from "../components/alert.vue";
+import timeBoard from "../components/timeBoard.vue";
+import qrcode from "../components/qrcode.vue";
+import clipboard from "../components/clipboard.vue";
 
 export default {
   name: "detailPage",
@@ -20,6 +40,9 @@ export default {
   },
   components: {
     cAlert,
+    timeBoard,
+    qrcode,
+    clipboard,
   },
   mounted() {
     this.init();
@@ -30,12 +53,24 @@ export default {
         this.detailData = res[0];
       });
     },
+    gotoIndex() {
+      this.$router.replace("/index");
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
 .detail-page {
+  .detail-content {
+    padding: 10px 0;
+  }
+  .box {
+    justify-content: flex-start;
+  }
+  .tools {
+    justify-content: space-between;
+  }
   .viewer {
     position: relative;
     height: 300px;
@@ -44,6 +79,13 @@ export default {
     padding: 20px 40px;
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);
+  }
+  .no-data {
+    flex-flow: column;
+    justify-content: center;
+    i {
+      font-size: 38px;
+    }
   }
 }
 </style>
