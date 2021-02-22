@@ -1,7 +1,9 @@
 <template>
   <div class="detail-page">
     <cAlert></cAlert>
-    <logo class="detail"></logo>
+    <div class="detail-top">
+      <logo class="detail"></logo>
+    </div>
     <div class="viewer">
       <div v-if="detailData.content" class="box tools">
         <div class="box">
@@ -18,7 +20,8 @@
       <div v-if="!detailData.content" class="no-data box">
         <div><i class="iconfont iconku"></i></div>
         <div>
-          该文本已过期，您可以先前往首页 <a class="to-index-new" @click="gotoIndex">新建文本</a>
+          该文本已过期，您可以先前往首页
+          <a class="to-index-new" @click="gotoIndex">新建文本</a>
         </div>
       </div>
     </div>
@@ -68,8 +71,9 @@ export default {
   .detail-content {
     padding: 10px 0;
   }
-  .logo.detail{
-    padding-top: 24px;
+  .detail-top{
+    width: 100%;
+    padding: 24px 32px;
   }
   .box {
     justify-content: flex-start;
@@ -82,11 +86,11 @@ export default {
     min-height: 300px;
     width: 80%;
     margin: 30px auto;
-    margin-top: 80px;
+    margin-top: 30px;
     padding: 20px 40px;
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);
-    .to-index-new{
+    .to-index-new {
       color: var(--kd-theme-sub-color);
     }
   }
