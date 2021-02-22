@@ -112,9 +112,9 @@ export default {
 
 <style lang="less" scoped>
 /deep/ a {
-  color: var(--kd--font-color);
+  color: var(--pf-font-color);
   :hover {
-    color: var(--kd-theme-sub-color);
+    color: var(--pf-theme-sub-color);
   }
 }
 .index-page {

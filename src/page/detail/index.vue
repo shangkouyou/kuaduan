@@ -73,7 +73,7 @@ export default {
   }
   .detail-top{
     width: 100%;
-    padding: 24px 32px;
+    padding: var(--pf-page-padding);
   }
   .box {
     justify-content: flex-start;
@@ -91,7 +91,7 @@ export default {
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);
     .to-index-new {
-      color: var(--kd-theme-sub-color);
+      color: var(--pf-theme-sub-color);
     }
   }
   .no-data {

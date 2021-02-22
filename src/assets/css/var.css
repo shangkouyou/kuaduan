@@ -1,6 +1,8 @@
 :root{
-    --kd-theme-color:#0f69ff;
-    --kd-theme-sub-color:#5551ff;
-    --kd--gray-color:#666;
-    --kd--font-color:#333;
+    --pf-theme-color:#0f69ff;
+    --pf-theme-sub-color:#5551ff;
+    --pf-gray-color:#666;
+    --pf-font-color:#333;
+    --pf-page-padding:25px 30px;
+    --pf-alert-gradient:linear-gradient(to bottom,transparent 80%,rgba(0, 0, 0, 0.15));
 }

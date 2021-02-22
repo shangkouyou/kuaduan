@@ -2,20 +2,22 @@
   <div class="index-page">
     <cAlert></cAlert>
     <div class="index-page-top">
-      <inputForm 
-            :invitation="invitation"
-            @onSubmit="getContentList(true)" ></inputForm>
+      <inputForm
+        :invitation="invitation"
+        @onSubmit="getContentList(true)"
+      ></inputForm>
     </div>
     <div class="page-body center-box">
-      <div class="content-item">
+      <div v-if="dataList.length" class="content-item">
         <a v-for="(item, index) in dataList" :key="index">
           <div class="box tools">
             <clipboard ref="rCBoard" :item="item"></clipboard>
             <qrcode :item="item"></qrcode>
-            <deleter 
-            :invitation="invitation" 
-            :id="item._id" 
-            @deleted="getContentList" ></deleter>
+            <deleter
+              :invitation="invitation"
+              :id="item._id"
+              @deleted="getContentList"
+            ></deleter>
             <a @click="doGotoDetail(item._id)" class="del-content-item goto">
               <i class="iconfont iconyoujiantou1"></i>
             </a>
@@ -36,6 +38,12 @@
         />
         <!-- <div class="load-end">- 到底了 -</div> -->
       </div>
+      <div v-if="isNoData" class="no-data box">
+        <div>
+          <div><i class="iconfont iconnull1"></i></div>
+          <div>暂无记录</div>
+        </div>
+      </div>
     </div>
     <a-back-top />
   </div>
@@ -43,10 +51,7 @@
 
 <script>
 import FastScanner from "fastscan";
-import {
-  getContentListApi,
-  captchaUrl,
-} from "@/api/contentList";
+import { getContentListApi, captchaUrl } from "@/api/contentList";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
@@ -68,6 +73,7 @@ export default {
       },
       invitation: "",
       sensitivitys: "今日头条,微信,支付宝",
+      isNoData : false
     };
   },
   components: {
@@ -101,14 +107,18 @@ export default {
       if (isInit) {
         this.pagination.page = 1;
       }
-      getContentListApi(this.pagination).then((res) => {
-        this.dataList = res.docs;
-        this.invitation = res.invitation;
-        this.pagination.total = res.total;
-        window.scrollTo(0, 0);
-      }).catch(() => {
-        this.$message.error("加载失败，请稍后再试");
-      });
+      getContentListApi(this.pagination)
+        .then((res) => {
+          this.dataList = res.docs;
+          this.invitation = res.invitation;
+          this.pagination.total = res.total;
+          window.scrollTo(0, 0);
+          if( !this.dataList.length )this.isNoData = true;//解决闪屏问题
+          else this.isNoData = false;
+        })
+        .catch(() => {
+          this.$message.error("加载失败，请稍后再试");
+        });
     },
     doGotoDetail(id) {
       this.$router.push(`/detail/${id}`);
@@ -123,9 +133,9 @@ export default {
 
 <style lang="less" scoped>
 /deep/ a {
-  color: var(--kd--font-color);
+  color: var(--pf-font-color);
   :hover {
-    color: var(--kd-theme-sub-color);
+    color: var(--pf-theme-sub-color);
   }
 }
 .index-page {
@@ -133,6 +143,15 @@ export default {
 
   .page-body {
     padding: 10px;
+  }
+  .no-data {
+    text-align: center;
+    color: #bbb;
+    height: 300px;
+    i {
+      font-size: 50px;
+      color: #ddd;
+    }
   }
 
   .content-item {
@@ -157,7 +176,7 @@ export default {
     .goto {
       .iconfont {
         font-size: 18px;
-        color: #888; 
+        color: #888;
       }
     }
     .del-content-item {

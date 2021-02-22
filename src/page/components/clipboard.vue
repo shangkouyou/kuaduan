@@ -47,6 +47,6 @@ export default {
 <style lang="less" scoped>
 .cobyOrderSn{
   margin-right: 15px;
-  color: var(--kd--gray-color);
+  color: var(--pf-gray-color);
 }
 </style>

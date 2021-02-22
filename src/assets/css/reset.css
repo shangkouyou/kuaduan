@@ -53,7 +53,7 @@ a, a:hover, a:visited, a:focus, a:link {
 }
 
 a.link {
-    color:var(--kd--font-color);
+    color:var(--pf-font-color);
 }
 
 img {

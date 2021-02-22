@@ -120,12 +120,12 @@ export default {
 <style lang="less" scoped>
 .page-form {
   position: relative;
-  padding: 24px 32px;
+  padding: var(--pf-page-padding);
   .input-form {
     flex: 1;
-    border-bottom: 2px solid var(--kd--font-color);
+    border-bottom: 2px solid var(--pf-font-color);
     .iconfont {
-      color: var(--kd-theme-sub-color);
+      color: var(--pf-theme-sub-color);
       font-size: 20px;
       font-weight: 900;
     }
@@ -137,7 +137,7 @@ export default {
       margin-right: 5px;
     }
     &.focus {
-      border-color: var(--kd-theme-sub-color);
+      border-color: var(--pf-theme-sub-color);
     }
     input {
       font-size: 18px;
@@ -153,9 +153,9 @@ export default {
     a {
       margin-right: 20px;
       font-size: 12px;
-      color: var(--kd-theme-sub-color);
+      color: var(--pf-theme-sub-color);
       &.on {
-        border-bottom: 2px solid var(--kd-theme-sub-color);
+        border-bottom: 2px solid var(--pf-theme-sub-color);
       }
     }
   }

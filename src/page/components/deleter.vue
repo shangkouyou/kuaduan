@@ -53,6 +53,6 @@ export default {
 
 <style lang="less" scoped>
 .del-item{
-  color: var(--kd--gray-color);
+  color: var(--pf-gray-color);
 }
 </style>

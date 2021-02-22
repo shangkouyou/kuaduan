@@ -39,13 +39,8 @@ export default {
     padding: 12px 60px;
     position: relative;
     color: #fff;
-    background: var(--kd-theme-color);
-    background-image: linear-gradient(
-      to bottom,
-      transparent 80%,
-      rgba(0, 0, 0, 0.15)
-    );
-    // background: rgb(199, 185, 255);
+    background: var(--pf-theme-color);
+    background-image: var(--pf-alert-gradient);
     .header-content-right {
       position: absolute;
       top: 0;
@@ -53,21 +48,13 @@ export default {
       height: 100%;
       width: 100px;
       background: #188fff;
-      background-image: linear-gradient(
-        to bottom,
-        transparent 80%,
-        rgba(0, 0, 0, 0.15)
-      );
+      background-image: var(--pf-alert-gradient);
       .skew-box {
         position: absolute;
         left: -18px;
         height: 100%;
         background: #188fff;
-        background-image: linear-gradient(
-          to bottom,
-          transparent 80%,
-          rgba(0, 0, 0, 0.15)
-        );
+        background-image: var(--pf-alert-gradient);
         width: 36px;
         transform: skew(-22deg);
       }

@@ -8,14 +8,13 @@
 <style lang="less" scoped>
 .logo{
     position: absolute;
-    left: 20px;
     font-weight: 900;
     font-size: 18px;
     letter-spacing: 2px;
     color: #000;
     .ful{
       font-size: 22px;
-      color: var(--kd-theme-sub-color);
+      color: var(--pf-theme-sub-color);
     }
 }
 </style>
