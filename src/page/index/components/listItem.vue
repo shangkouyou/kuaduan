@@ -1,52 +1,39 @@
 <template>
-  <div class="index-page">
-    <cAlert></cAlert>
-    <div class="index-page-top">
-      <inputForm 
-            :invitation="invitation"
-            @onSubmit="getContentList(true)" ></inputForm>
-    </div>
-    <div class="page-body center-box">
-      <div class="content-item">
-        <a v-for="(item, index) in dataList" :key="index">
-          <div class="box tools">
-            <clipboard ref="rCBoard" :item="item"></clipboard>
-            <qrcode :item="item"></qrcode>
-            <deleter 
-            :invitation="invitation" 
-            :id="item._id" 
-            @deleted="getContentList" ></deleter>
-            <a @click="doGotoDetail(item._id)" class="del-content-item goto">
-              <i class="iconfont iconyoujiantou1"></i>
-            </a>
-          </div>
-          <h1 class="title">
-            {{ item.content }}
-          </h1>
-          <div class="info box">
-            <timeBoard :item="item"></timeBoard>
-          </div>
+  <div class="content-item">
+    <a v-for="(item, index) in dataList" :key="index">
+      <div class="box tools">
+        <clipboard ref="rCBoard" :item="item"></clipboard>
+        <qrcode :item="item"></qrcode>
+        <deleter
+          :invitation="invitation"
+          :id="item._id"
+          @deleted="getContentList"
+        ></deleter>
+        <a @click="doGotoDetail(item._id)" class="del-content-item goto">
+          <i class="iconfont iconyoujiantou1"></i>
         </a>
-        <a-pagination
-          v-model="pagination.page"
-          :pageSize="pagination.limit"
-          :total="pagination.total"
-          :hideOnSinglePage="true"
-          @change="onPageChange"
-        />
-        <!-- <div class="load-end">- 到底了 -</div> -->
       </div>
-    </div>
-    <a-back-top />
+      <h1 class="title">
+        {{ item.content }}
+      </h1>
+      <div class="info box">
+        <timeBoard :item="item"></timeBoard>
+      </div>
+    </a>
+    <a-pagination
+      v-model="pagination.page"
+      :pageSize="pagination.limit"
+      :total="pagination.total"
+      :hideOnSinglePage="true"
+      @change="onPageChange"
+    />
+    <!-- <div class="load-end">- 到底了 -</div> -->
   </div>
 </template>
 
 <script>
 import FastScanner from "fastscan";
-import {
-  getContentListApi,
-  captchaUrl,
-} from "@/api/contentList";
+import { getContentListApi, captchaUrl } from "@/api/contentList";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
@@ -101,14 +88,16 @@ export default {
       if (isInit) {
         this.pagination.page = 1;
       }
-      getContentListApi(this.pagination).then((res) => {
-        this.dataList = res.docs;
-        this.invitation = res.invitation;
-        this.pagination.total = res.total;
-        window.scrollTo(0, 0);
-      }).catch(() => {
-        this.$message.error("加载失败，请稍后再试");
-      });
+      getContentListApi(this.pagination)
+        .then((res) => {
+          this.dataList = res.docs;
+          this.invitation = res.invitation;
+          this.pagination.total = res.total;
+          window.scrollTo(0, 0);
+        })
+        .catch(() => {
+          this.$message.error("加载失败，请稍后再试");
+        });
     },
     doGotoDetail(id) {
       this.$router.push(`/detail/${id}`);
@@ -157,7 +146,7 @@ export default {
     .goto {
       .iconfont {
         font-size: 18px;
-        color: #888; 
+        color: #888;
       }
     }
     .del-content-item {

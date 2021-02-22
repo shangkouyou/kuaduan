@@ -1,6 +1,7 @@
 <template>
   <div class="detail-page">
     <cAlert></cAlert>
+    <logo class="detail"></logo>
     <div class="viewer">
       <div v-if="detailData.content" class="box tools">
         <div class="box">
@@ -30,6 +31,7 @@ import cAlert from "../components/alert.vue";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
+import logo from "../components/logo.vue";
 
 export default {
   name: "detailPage",
@@ -43,6 +45,7 @@ export default {
     timeBoard,
     qrcode,
     clipboard,
+    logo,
   },
   mounted() {
     this.init();
@@ -65,6 +68,9 @@ export default {
   .detail-content {
     padding: 10px 0;
   }
+  .logo.detail{
+    padding-top: 24px;
+  }
   .box {
     justify-content: flex-start;
   }
@@ -76,6 +82,7 @@ export default {
     min-height: 300px;
     width: 80%;
     margin: 30px auto;
+    margin-top: 80px;
     padding: 20px 40px;
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);

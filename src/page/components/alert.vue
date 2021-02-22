@@ -52,7 +52,7 @@ export default {
       right: 0;
       height: 100%;
       width: 100px;
-      background: var(--kd-theme-color);
+      background: #188fff;
       background-image: linear-gradient(
         to bottom,
         transparent 80%,
@@ -62,7 +62,7 @@ export default {
         position: absolute;
         left: -18px;
         height: 100%;
-        background: var(--kd-theme-color);
+        background: #188fff;
         background-image: linear-gradient(
           to bottom,
           transparent 80%,
