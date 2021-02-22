@@ -71,7 +71,7 @@ export default {
   .detail-content {
     padding: 10px 0;
   }
-  .detail-top{
+  .detail-top {
     width: 100%;
     padding: var(--pf-page-padding);
   }
@@ -99,6 +99,7 @@ export default {
     justify-content: center;
     i {
       font-size: 38px;
+      color: #ccc;
     }
   }
 }

@@ -140,16 +140,15 @@ export default {
 }
 .index-page {
   height: 100%;
-
   .page-body {
     padding: 10px;
   }
   .no-data {
     text-align: center;
-    color: #bbb;
+    color: #aaa;
     height: 300px;
     i {
-      font-size: 50px;
+      font-size: 55px;
       color: #ddd;
     }
   }
