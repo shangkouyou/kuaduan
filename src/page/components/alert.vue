@@ -15,6 +15,7 @@
 
 <script>
 
+import keys from "@/commons/keys";
 export default {
   name: "CAlert",
   data() {
@@ -22,10 +23,16 @@ export default {
       showHcontent: true,
     };
   },
-  mounted() {},
+  created() {
+    const showAlert = localStorage.getItem(keys.cache.ALERT_SHOW)
+    if( showAlert && showAlert !== 'true' ){
+      this.showHcontent = false;
+    }
+  },
   methods: {
     doDelHcontent() {
       this.showHcontent = false;
+      localStorage.setItem(keys.cache.ALERT_SHOW,false)
     },
   },
 };

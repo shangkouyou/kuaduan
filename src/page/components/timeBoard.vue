@@ -9,6 +9,10 @@
       <i class="iconfont icondaojishi"></i>
       {{ remaining(item) }} 后过期
     </div>
+    <div class="word-space">|</div>
+    <div class="del-time box">
+      复制数：{{item.copyNum}}
+    </div>
   </div>
 </template>
 

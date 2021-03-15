@@ -43,6 +43,7 @@
 <script>
 import { addContentApi } from "@/api/contentList";
 import logo from "../../components/logo.vue";
+import { getCookie } from "@/commons/utils";
 
 export default {
   name: "inexForm",
@@ -77,6 +78,7 @@ export default {
       let params = {
         content: this.words,
         indate: this.indateVal,
+        visitorId: getCookie('csrfToken'),
         _csrf: this.invitation,
       };
 

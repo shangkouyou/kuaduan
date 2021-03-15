@@ -11,9 +11,14 @@
       <div v-if="dataList.length" class="content-item">
         <a v-for="(item, index) in dataList" :key="index">
           <div class="box tools">
-            <clipboard ref="rCBoard" :item="item"></clipboard>
+            <clipboard
+              :invitation="invitation"
+              ref="rCBoard"
+              :item="item"
+            ></clipboard>
             <qrcode :item="item"></qrcode>
             <deleter
+              v-if="visitorId === item.visitorId"
               :invitation="invitation"
               :id="item._id"
               @deleted="getContentList"
@@ -58,6 +63,7 @@ import clipboard from "../components/clipboard.vue";
 import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
+import { getCookie } from "@/commons/utils";
 
 let scanner = null;
 
@@ -73,7 +79,8 @@ export default {
       },
       invitation: "",
       sensitivitys: "今日头条,微信,支付宝",
-      isNoData : false
+      isNoData: false,
+      visitorId: getCookie("csrfToken"),
     };
   },
   components: {
@@ -113,7 +120,8 @@ export default {
           this.invitation = res.invitation;
           this.pagination.total = res.total;
           window.scrollTo(0, 0);
-          if( !this.dataList.length )this.isNoData = true;//解决闪屏问题
+          if (!this.dataList.length) this.isNoData = true;
+          //解决闪屏问题
           else this.isNoData = false;
         })
         .catch(() => {
