@@ -21,28 +21,24 @@
 import {
   deleteListItemByIdApi,
 } from "@/api/contentList";
+import keys from "@/commons/keys";
 
 export default {
   name: "Deleter",
   props: {
-    invitation: {
-      type: String,
-    },
     id: {
       type: String,
     },
   },
   data() {
-    return {};
-  },
-  computed : {
-    getInvitation(){
-      return this.invitation
-    }
+    return {
+      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
+    };
   },
   methods: {
     doDelContentItem() {
       deleteListItemByIdApi({ _id: this.id, _csrf: this.invitation }).then(() => {
+        this.$message.destroy();
         this.$message.success("删除成功");
         this.$emit('deleted')
       });

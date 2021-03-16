@@ -19,6 +19,7 @@ import Vue from "vue";
 import clipboard from "clipboard";
 Vue.prototype.clipboard = clipboard;
 import { updateCopyNumByIdApi } from "@/api/contentList";
+import keys from "@/commons/keys";
 
 export default {
   name: "ValClipboard",
@@ -26,24 +27,51 @@ export default {
     item: {
       type: Object,
     },
-    invitation: {
-      type: String,
+    index: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
-    return {};
+    return {
+      timer: null,
+      isSubmit: false,
+      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
+    };
   },
   mounted() {},
   methods: {
     doCopyWord() {
+      
+      if (this.isSubmit) {
+        this.$message.destroy();
+        this.$message.warning("您操作的太快了哦");
+        return;
+      }
+
       let clipboard = new this.clipboard(".cobyOrderSn");
       clipboard.on("success", (e) => {
         this.$message.destroy();
         this.$message.success("复制成功");
-        updateCopyNumByIdApi({ _id: this.item._id, _csrf: this.invitation });
+        updateCopyNumByIdApi({
+          _id: this.item._id,
+          _csrf: this.invitation,
+        }).then((res) => {
+          if (res.success) {
+            this.preventSubmits();
+            this.$emit("onUpdateItemCopyNum", this.index);
+          }
+        });
         e.clearSelection();
         clipboard.destroy();
       });
+    },
+    preventSubmits() {
+      this.isSubmit = true;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.isSubmit = false;
+      }, 2000);
     },
   },
 };

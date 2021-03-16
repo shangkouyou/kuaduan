@@ -11,7 +11,8 @@
     </div>
     <div class="word-space">|</div>
     <div class="del-time box">
-      复制数：{{item.copyNum}}
+      <i class="iconfont iconshujutongji"></i>
+      {{item.copyNum}}次复制
     </div>
   </div>
 </template>

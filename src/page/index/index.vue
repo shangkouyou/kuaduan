@@ -3,7 +3,6 @@
     <cAlert></cAlert>
     <div class="index-page-top">
       <inputForm
-        :invitation="invitation"
         @onSubmit="getContentList(true)"
       ></inputForm>
     </div>
@@ -12,14 +11,14 @@
         <a v-for="(item, index) in dataList" :key="index">
           <div class="box tools">
             <clipboard
-              :invitation="invitation"
+              :index="index"
               ref="rCBoard"
               :item="item"
+              @onUpdateItemCopyNum="onUpdateItemCopyNum"
             ></clipboard>
             <qrcode :item="item"></qrcode>
             <deleter
               v-if="visitorId === item.visitorId"
-              :invitation="invitation"
               :id="item._id"
               @deleted="getContentList"
             ></deleter>
@@ -64,6 +63,7 @@ import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
 import { getCookie } from "@/commons/utils";
+import keys from "@/commons/keys";
 
 let scanner = null;
 
@@ -92,6 +92,13 @@ export default {
     inputForm,
   },
   mounted() {
+    if (window.Notification && Notification.permission !== "denied") {
+      Notification.requestPermission((status) => {
+        console.log(`requestPermission: `,status)
+        new Notification("Hi!");
+      });
+    }
+
     this.getContentList();
   },
   methods: {
@@ -118,6 +125,7 @@ export default {
         .then((res) => {
           this.dataList = res.docs;
           this.invitation = res.invitation;
+          sessionStorage.setItem(keys.cache.INVITATION_VALLUE,this.invitation);
           this.pagination.total = res.total;
           window.scrollTo(0, 0);
           if (!this.dataList.length) this.isNoData = true;
@@ -134,6 +142,9 @@ export default {
     onPageChange(page) {
       this.pagination.page = page;
       this.getContentList();
+    },
+    onUpdateItemCopyNum(index) {
+      this.dataList[index].copyNum += 1;
     },
   },
 };

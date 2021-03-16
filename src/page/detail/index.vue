@@ -9,6 +9,11 @@
         <div class="box">
           <clipboard ref="rCBoard" :item="detailData"></clipboard>
           <qrcode :item="detailData"></qrcode>
+          <deleter
+            v-if="visitorId === detailData.visitorId"
+            :id="detailData._id"
+            @deleted="onDeleted"
+          ></deleter>
         </div>
         <div>
           <timeBoard :item="detailData"></timeBoard>
@@ -35,12 +40,17 @@ import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
 import logo from "../components/logo.vue";
+import deleter from "../components/deleter.vue";
+import { getCookie } from "@/commons/utils";
 
 export default {
   name: "detailPage",
   data() {
     return {
-      detailData: {},
+      detailData: {
+        content :''
+      },
+      visitorId: getCookie("csrfToken"),
     };
   },
   components: {
@@ -49,6 +59,7 @@ export default {
     qrcode,
     clipboard,
     logo,
+    deleter,
   },
   mounted() {
     this.init();
@@ -61,6 +72,9 @@ export default {
     },
     gotoIndex() {
       this.$router.replace("/index");
+    },
+    onDeleted() {
+      this.$router.back();
     },
   },
 };
@@ -80,6 +94,9 @@ export default {
   }
   .tools {
     justify-content: space-between;
+    .box > * {
+      margin-right: 20px;
+    }
   }
   .viewer {
     position: relative;

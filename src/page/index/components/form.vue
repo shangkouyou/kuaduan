@@ -44,14 +44,10 @@
 import { addContentApi } from "@/api/contentList";
 import logo from "../../components/logo.vue";
 import { getCookie } from "@/commons/utils";
+import keys from "@/commons/keys";
 
 export default {
   name: "inexForm",
-  props: {
-    invitation: {
-      type: String,
-    },
-  },
   data() {
     return {
       inputClass: "",
@@ -61,6 +57,7 @@ export default {
       isActive: 0,
       timer: null,
       isSubmit: false,
+      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
     };
   },
   components: {
@@ -71,6 +68,7 @@ export default {
     doSubmitData() {
       if (!this.words.trim()) return;
       if (this.isSubmit) {
+        this.$message.destroy();
         this.$message.warning("您操作的太快了哦");
         return;
       }
