@@ -7,6 +7,7 @@ import {
   Popconfirm,
   Pagination,
   BackTop,
+  Statistic,
 } from 'ant-design-vue'
 import Vue from 'vue'
 Vue.use(Modal)
@@ -15,6 +16,7 @@ Vue.use(Tooltip)
 Vue.use(Popconfirm)
 Vue.use(Pagination)
 Vue.use(BackTop)
+Vue.use(Statistic)
 
 Vue.prototype.$message = message
 Vue.prototype.$confirm = Modal.confirm

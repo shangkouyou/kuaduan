@@ -4,10 +4,18 @@
     <div class="detail-top">
       <logo class="detail"></logo>
     </div>
+    <div class="count-down">
+      <a-statistic-countdown :value="gStartTime" @finish="onDeleted" />
+      <span class="cd-text">后过期</span>
+    </div>
     <div class="viewer">
       <div v-if="detailData.content" class="box tools">
         <div class="box">
-          <clipboard ref="rCBoard" :item="detailData"></clipboard>
+          <clipboard
+            ref="rCBoard"
+            :item="detailData"
+            @onUpdateItemCopyNum="onUpdateItemCopyNum"
+          ></clipboard>
           <qrcode :item="detailData"></qrcode>
           <deleter
             v-if="visitorId === detailData.visitorId"
@@ -42,13 +50,14 @@ import clipboard from "../components/clipboard.vue";
 import logo from "../components/logo.vue";
 import deleter from "../components/deleter.vue";
 import { getCookie } from "@/commons/utils";
+import moment from "moment";
 
 export default {
   name: "detailPage",
   data() {
     return {
       detailData: {
-        content :''
+        content: "",
       },
       visitorId: getCookie("csrfToken"),
     };
@@ -60,6 +69,15 @@ export default {
     clipboard,
     logo,
     deleter,
+  },
+  computed: {
+    gStartTime() {
+      let st = moment(this.detailData.createTime).add(
+        this.detailData.indate,
+        "h"
+      );
+      return st._d.getTime();
+    },
   },
   mounted() {
     this.init();
@@ -76,6 +94,9 @@ export default {
     onDeleted() {
       this.$router.back();
     },
+    onUpdateItemCopyNum() {
+      this.detailData.copyNum += 1;
+    },
   },
 };
 </script>
@@ -88,6 +109,15 @@ export default {
   .detail-top {
     width: 100%;
     padding: var(--pf-page-padding);
+  }
+  .count-down {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .cd-text {
+      margin-left: 10px;
+    }
   }
   .box {
     justify-content: flex-start;

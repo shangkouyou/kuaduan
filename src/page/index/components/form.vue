@@ -13,7 +13,7 @@
             v-model="words"
             maxlength="3000"
             @keyup.enter="doSubmitData"
-            placeholder="在此输入内容"
+            placeholder="在此输入内容，3000字以内"
             type="text"
           />
           <a v-show="words" class="clear-val" @click="doClearForm">
