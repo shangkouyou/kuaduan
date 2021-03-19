@@ -109,9 +109,9 @@ export default {
         this.isSubmit = false;
       }, 2000);
     },
-    changeCaptch() {
-      this.captchaUrl += `?r=${new Date().getTime()}`;
-    },
+    // changeCaptch() {
+    //   this.captchaUrl += `?r=${new Date().getTime()}`;
+    // },
   },
 };
 </script>

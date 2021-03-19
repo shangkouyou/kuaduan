@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import FastScanner from "fastscan";
 import { getContentListApi, captchaUrl } from "@/api/contentList";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
@@ -62,8 +61,6 @@ import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
 import { getCookie } from "@/commons/utils";
 import keys from "@/commons/keys";
-
-let scanner = null;
 
 export default {
   name: "indexPage",
@@ -76,7 +73,6 @@ export default {
         limit: 20,
       },
       invitation: "",
-      sensitivitys: "今日头条,微信,支付宝",
       isNoData: false,
       visitorId: getCookie("csrfToken"),
     };
@@ -93,21 +89,6 @@ export default {
     this.getContentList();
   },
   methods: {
-    rebuild() {
-      let words = this.sensitivitys
-        .replace(new RegExp("，", "g"), ",")
-        .replace(new RegExp("\\n", "g"), ",")
-        .split(",");
-      words = words
-        .map((word) => {
-          return word.trim();
-        })
-        .filter((word) => {
-          return word.length > 0;
-        });
-      scanner = new FastScanner(words);
-      return scanner.search(this.words);
-    },
     getContentList(isInit) {
       if (isInit) {
         this.pagination.page = 1;

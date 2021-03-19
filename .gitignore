@@ -2,6 +2,8 @@
 node_modules
 /dist
 yarn.lock
+/app
+app.zip
 
 
 # local env files
