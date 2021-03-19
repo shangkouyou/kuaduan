@@ -2,9 +2,7 @@
   <div class="index-page">
     <cAlert></cAlert>
     <div class="index-page-top">
-      <inputForm
-        @onSubmit="getContentList(true)"
-      ></inputForm>
+      <inputForm @onSubmit="getContentList(true)"></inputForm>
     </div>
     <div class="page-body center-box">
       <div v-if="dataList.length" class="content-item">
@@ -92,13 +90,6 @@ export default {
     inputForm,
   },
   mounted() {
-    if (window.Notification && Notification.permission !== "denied") {
-      Notification.requestPermission((status) => {
-        console.log(`requestPermission: `,status)
-        new Notification("Hi!");
-      });
-    }
-
     this.getContentList();
   },
   methods: {
@@ -125,7 +116,7 @@ export default {
         .then((res) => {
           this.dataList = res.docs;
           this.invitation = res.invitation;
-          sessionStorage.setItem(keys.cache.INVITATION_VALLUE,this.invitation);
+          sessionStorage.setItem(keys.cache.INVITATION_VALLUE, this.invitation);
           this.pagination.total = res.total;
           window.scrollTo(0, 0);
           if (!this.dataList.length) this.isNoData = true;

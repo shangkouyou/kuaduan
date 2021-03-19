@@ -57,7 +57,6 @@ export default {
       isActive: 0,
       timer: null,
       isSubmit: false,
-      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
     };
   },
   components: {
@@ -77,7 +76,7 @@ export default {
         content: this.words,
         indate: this.indateVal,
         visitorId: getCookie('csrfToken'),
-        _csrf: this.invitation,
+        _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || '',
       };
 
       addContentApi(params)

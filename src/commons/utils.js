@@ -1,3 +1,4 @@
+
 export function getCookie(name) {
   var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
   arr = document.cookie.match(reg);

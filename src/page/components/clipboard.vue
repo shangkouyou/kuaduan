@@ -36,7 +36,6 @@ export default {
     return {
       timer: null,
       isSubmit: false,
-      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
     };
   },
   mounted() {},
@@ -55,7 +54,7 @@ export default {
         this.$message.success("复制成功");
         updateCopyNumByIdApi({
           _id: this.item._id,
-          _csrf: this.invitation,
+          _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || '',
         }).then((res) => {
           if (res.success) {
             this.preventSubmits();

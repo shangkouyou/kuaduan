@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import {
-  deleteListItemByIdApi,
-} from "@/api/contentList";
+import { deleteListItemByIdApi } from "@/api/contentList";
 import keys from "@/commons/keys";
 
 export default {
@@ -31,16 +29,17 @@ export default {
     },
   },
   data() {
-    return {
-      invitation : sessionStorage.getItem(keys.cache.INVITATION_VALLUE)
-    };
+    return {};
   },
   methods: {
     doDelContentItem() {
-      deleteListItemByIdApi({ _id: this.id, _csrf: this.invitation }).then(() => {
+      deleteListItemByIdApi({
+        _id: this.id,
+        _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || "",
+      }).then(() => {
         this.$message.destroy();
         this.$message.success("删除成功");
-        this.$emit('deleted')
+        this.$emit("deleted");
       });
     },
   },
@@ -48,7 +47,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.del-item{
+.del-item {
   color: var(--pf-gray-color);
 }
 </style>
