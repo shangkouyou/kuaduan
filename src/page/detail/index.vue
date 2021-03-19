@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       detailData: {
-        content: "",
+        content: "加载中...",
       },
       visitorId: getCookie("csrfToken"),
     };
