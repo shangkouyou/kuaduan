@@ -2,7 +2,7 @@
   <div v-if="showHcontent" class="header-content bottom-shadow">
     <span
       >所有新建内容有效期默认
-      <strong>仅有1小时</strong>，超时后即删除无法找回</span
+      <strong>仅有1小时</strong>，超时后即删除无法找回，请慎重剪切</span
     >
     <div class="header-content-right box bottom-shadow">
       <div class="skew-box bottom-shadow"></div>
