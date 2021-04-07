@@ -86,6 +86,7 @@ export default {
           this.preventSubmits();
         })
         .catch(() => {
+          this.$message.destroy();
           this.$message.error("提交失败，请稍后再试");
         });
     },

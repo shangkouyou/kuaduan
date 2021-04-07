@@ -18,7 +18,7 @@
 import Vue from "vue";
 import clipboard from "clipboard";
 Vue.prototype.clipboard = clipboard;
-import { updateCopyNumByIdApi } from "@/api/contentList";
+import { updateListItemByIdApi } from "@/api/contentList";
 import keys from "@/commons/keys";
 
 export default {
@@ -52,9 +52,11 @@ export default {
       clipboard.on("success", (e) => {
         this.$message.destroy();
         this.$message.success("复制成功");
-        updateCopyNumByIdApi({
+        updateListItemByIdApi({
           _id: this.item._id,
           _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || '',
+          patchType : 1, //1=基于库中最新的值
+          copyNum : 1,
         }).then((res) => {
           if (res.success) {
             this.preventSubmits();

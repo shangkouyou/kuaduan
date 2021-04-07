@@ -105,6 +105,7 @@ export default {
           else this.isNoData = false;
         })
         .catch(() => {
+          this.$message.destroy();
           this.$message.error("加载失败，请稍后再试");
         });
     },
@@ -201,6 +202,7 @@ export default {
       position: relative;
       font-size: 12px;
       justify-content: space-between;
+      user-select: none;
     }
   }
   .load-end {

@@ -4,7 +4,7 @@
     <div class="detail-top">
       <logo class="detail"></logo>
     </div>
-    <div class="count-down">
+    <div v-if="detailData" class="count-down">
       <a-statistic-countdown :value="gStartTime" @finish="onDeleted" />
       <span class="cd-text">后过期</span>
     </div>
@@ -24,13 +24,13 @@
           ></deleter>
         </div>
         <div>
-          <timeBoard :item="detailData"></timeBoard>
+          <timeBoard v-if="detailData" :item="detailData"></timeBoard>
         </div>
       </div>
       <div v-if="detailData.content" class="detail-content">
         {{ detailData.content }}
       </div>
-      <div v-if="!detailData.content" class="no-data box">
+      <div v-if="!detailData" class="no-data box">
         <div><i class="iconfont iconku"></i></div>
         <div>
           该文本已过期，您可以先前往首页
@@ -58,6 +58,7 @@ export default {
     return {
       detailData: {
         content: "加载中...",
+        copyNum : 0
       },
       visitorId: getCookie("csrfToken"),
     };
@@ -85,7 +86,7 @@ export default {
   methods: {
     init() {
       getItemByIdApi({ _id: this.$route.params.id }).then((res) => {
-        this.detailData = res[0];
+        this.detailData = res[0] || '';
       });
     },
     gotoIndex() {
