@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <a href="/">
+    <a href="/app">
       <div><span>power</span><span class="ful">Ful</span> <sup>beta</sup></div>
     </a>
   </div>
