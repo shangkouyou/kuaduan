@@ -25,5 +25,13 @@ yarn run test
 yarn run lint
 ```
 
+### start mongo
+
+```
+cd /usr/local/mongoDB/bin
+sudo mongod --dbpath data/db
+
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
