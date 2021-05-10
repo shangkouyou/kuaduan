@@ -33,5 +33,3 @@ export function updateListItemByIdApi(params) {
     encode: true
   }).then((res) => res.data);
 }
-
-export const captchaUrl = `${module}captcha`

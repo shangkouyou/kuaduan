@@ -4,9 +4,6 @@
     <div class="center-box">
       <div>
         <div class="input-form box" :class="inputClass">
-          <!-- <div class="captcha">
-            <img @click="changeCaptch" :src="captchaUrl" alt="" />
-          </div> -->
           <input
             @focus="onFocus"
             @blur="onBlur"
@@ -110,9 +107,6 @@ export default {
         this.isSubmit = false;
       }, 2000);
     },
-    // changeCaptch() {
-    //   this.captchaUrl += `?r=${new Date().getTime()}`;
-    // },
   },
 };
 </script>
@@ -128,10 +122,6 @@ export default {
       color: var(--pf-theme-sub-color);
       font-size: 20px;
       font-weight: 900;
-    }
-    .captcha {
-      width: 83px;
-      margin-right: 5px;
     }
     .clear-val {
       margin-right: 5px;

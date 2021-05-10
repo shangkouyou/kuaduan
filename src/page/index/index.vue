@@ -20,11 +20,11 @@
               :id="item._id"
               @deleted="getContentList"
             ></deleter>
-            <a @click="doGotoDetail(item._id)" class="del-content-item goto">
+            <a @click.stop="doGotoDetail(item._id)" class="del-content-item goto">
               <i class="iconfont iconyoujiantou1"></i>
             </a>
           </div>
-          <h1 class="title">
+          <h1 class="title" @click.stop="doClickTitle(item.content)">
             {{ item.content }}
           </h1>
           <div class="info box">
@@ -52,14 +52,14 @@
 </template>
 
 <script>
-import { getContentListApi, captchaUrl } from "@/api/contentList";
+import { getContentListApi } from "@/api/contentList";
 import timeBoard from "../components/timeBoard.vue";
 import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
 import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
-import { getCookie } from "@/commons/utils";
+import { getCookie,isURL } from "@/commons/utils";
 import keys from "@/commons/keys";
 
 export default {
@@ -67,7 +67,6 @@ export default {
   data() {
     return {
       dataList: [],
-      captchaUrl,
       pagination: {
         page: 1,
         limit: 20,
@@ -98,7 +97,7 @@ export default {
           this.dataList = res.docs;
           this.invitation = res.invitation;
           sessionStorage.setItem(keys.cache.INVITATION_VALLUE, this.invitation);
-          this.pagination.total = res.total;
+          this.pagination.total = res.totalDocs;
           window.scrollTo(0, 0);
           if (!this.dataList.length) this.isNoData = true;
           //解决闪屏问题
@@ -118,6 +117,13 @@ export default {
     },
     onUpdateItemCopyNum(index) {
       this.dataList[index].copyNum += 1;
+    },
+    doClickTitle(title){
+      if( title.length < 500 ){
+        if( isURL(title) ){
+          window.open(title)
+        }
+      }
     },
   },
 };
