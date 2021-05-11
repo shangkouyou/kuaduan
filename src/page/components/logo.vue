@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <a href="/app">
-      <div><span>power</span><span class="ful">Ful</span> <sup>beta</sup></div>
+      <div><span>power</span><span class="ful">Ful</span> <sup>Beta</sup></div>
     </a>
   </div>
 </template>
