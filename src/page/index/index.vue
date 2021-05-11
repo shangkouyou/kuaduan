@@ -20,7 +20,10 @@
               :id="item._id"
               @deleted="getContentList"
             ></deleter>
-            <a @click.stop="doGotoDetail(item._id)" class="del-content-item goto">
+            <a
+              @click.stop="doGotoDetail(item._id)"
+              class="del-content-item goto"
+            >
               <i class="iconfont iconyoujiantou1"></i>
             </a>
           </div>
@@ -59,7 +62,7 @@ import clipboard from "../components/clipboard.vue";
 import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
-import { getCookie,isURL } from "@/commons/utils";
+import { getCookie, isURL } from "@/commons/utils";
 import keys from "@/commons/keys";
 
 export default {
@@ -106,6 +109,7 @@ export default {
         .catch(() => {
           this.$message.destroy();
           this.$message.error("加载失败，请稍后再试");
+          this.isNoData = true;
         });
     },
     doGotoDetail(id) {
@@ -118,10 +122,10 @@ export default {
     onUpdateItemCopyNum(index) {
       this.dataList[index].copyNum += 1;
     },
-    doClickTitle(title){
-      if( title.length < 500 ){
-        if( isURL(title) ){
-          window.open(title)
+    doClickTitle(title) {
+      if (title.length < 500) {
+        if (isURL(title)) {
+          window.open(title);
         }
       }
     },
@@ -141,6 +145,7 @@ export default {
   .page-body {
     padding: 10px;
   }
+  min-width: 375px;
   .no-data {
     text-align: center;
     color: #aaa;
