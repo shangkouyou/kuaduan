@@ -104,6 +104,7 @@ export default {
 
 <style lang="less" scoped>
 .detail-page {
+  min-width: 600px;
   .detail-content {
     padding: 10px 0;
   }
