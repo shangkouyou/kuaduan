@@ -44,14 +44,15 @@ http://106.52.229.171
 
 ## 🐮 For Developer
 
-- 🖥 前端栈：vue+ant-design
-- 💽 后端栈：eggjs+egg-mongoose+mongoDB
-- 💾 服务器：cnetos+nginx
+- 🖥 前端栈：vue + ant-design
+- 💽 后端栈：eggjs + egg-mongoose + mongoDB
+- 💾 服务器：cnetos + nginx + nodejs
 
 🛠 前端源码:
 ```bash
 git clone https://github.com/cantatas/kuaduan.git
 ```
+
 🛠 后端源码：
 ```bash
 git clone https://github.com/cantatas/kuaduan-api.git
