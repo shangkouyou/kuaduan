@@ -28,7 +28,7 @@
             </a>
           </div>
           <h1 class="title" @click.stop="doClickTitle(item.content)">
-            {{ item.content }}
+            {{ aesEncrypt(item.content) }}
           </h1>
           <div class="info box">
             <timeBoard :item="item"></timeBoard>
@@ -64,6 +64,7 @@ import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
 import { getCookie, isURL } from "@/commons/utils";
 import keys from "@/commons/keys";
+var CryptoJS = require("crypto-js");
 
 export default {
   name: "indexPage",
@@ -129,6 +130,18 @@ export default {
         }
       }
     },
+    aesEncrypt (encrypted) {
+        if(!encrypted){
+            return '';
+        }
+        const aeskey = '60ca17c5f9e5c804382e9516';
+        var key = CryptoJS.enc.Utf8.parse(aeskey);
+        var decryptedData = CryptoJS.AES.decrypt(encrypted, key, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7
+        });
+        return decryptedData.toString(CryptoJS.enc.Utf8);
+    }
   },
 };
 </script>
