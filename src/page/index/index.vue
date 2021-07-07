@@ -28,7 +28,9 @@
             </a>
           </div>
           <h1 class="title" @click.stop="doClickTitle(item.content)">
-            {{ aesEncrypt(item.content) }}
+            <!-- {{ item.content }} -->
+            <!-- {{ aesDecrypt(item.content) }} -->
+            {{ rasDecrypt(item.content) }}
           </h1>
           <div class="info box">
             <timeBoard :item="item"></timeBoard>
@@ -64,7 +66,8 @@ import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
 import { getCookie, isURL } from "@/commons/utils";
 import keys from "@/commons/keys";
-var CryptoJS = require("crypto-js");
+
+import JSEncrypt from "jsencrypt";
 
 export default {
   name: "indexPage",
@@ -130,18 +133,20 @@ export default {
         }
       }
     },
-    aesEncrypt (encrypted) {
-        if(!encrypted){
-            return '';
-        }
-        const aeskey = '60ca17c5f9e5c804382e9516';
-        var key = CryptoJS.enc.Utf8.parse(aeskey);
-        var decryptedData = CryptoJS.AES.decrypt(encrypted, key, {
-            mode: CryptoJS.mode.ECB,
-            padding: CryptoJS.pad.Pkcs7
-        });
-        return decryptedData.toString(CryptoJS.enc.Utf8);
-    }
+    // 非对称加密
+    rasDecrypt(encrypted) {
+      const privateKey = "-----BEGIN RSA PRIVATE KEY-----MIICXgIBAAKBgQCla6TYu1jlEs/brPyZP6mU+ql3hP+IyCI/3F2Z9MaUwYiLuRm90HBhsRSXScQ3dDDAx0grb48ifbEC/Ni8jManQTTevX1h6bav2Jvg+v218CmY9xZvCYwSftby8S+L2E87irn8SErOV+w9BwIFQwfSCeOiVtGxski19jucyY3gVQIDAQABAoGAL1gYrSMptR5mOURQY3gSDB6VxCxfioFlNAvZCkhBUa/2aa8HjAkNMRiigQ5Ox2RM08/1euEKAWAh+m3thkFwVVaHAEr2cUHmAMvMxZYJyxQ8c+qE5IODXfNFaIlkywHsQT9nBTfxuy24wI2KThCncAGV3Emw1uLpxCT+W6DLGyECQQDRdDy5cGg4cXmx/DSMumTlo+SZ1EKCFSxyUMEmsWqFfB8i6ODHKspzStZZHvAbK00kxg4fnlTzwcoiZ/PWewaZAkEAyi5af+J/wSPDjJ92rEMARTrQiN4CUsGvRRPdpv03kvRCnJPHBbRpK6Soxg9c57G1kHUUXXR03TMJ0N82JvDJHQJBAK+QY9n4C5PMIfp7cTzIfAw0nUgHsBvDTbcgU1Zwfd4XlS24z7iB+KI9B4A6O346hHYfgPUlzQVo2VqPkcak5nkCQQCIlCeunGORJYfERzTzyY81NTYKP29yWET+dR0W4ZfZPgiBnZKk1+r0AJfCtD4ehn4QyAap2zHW+9N1tlPumlpBAkEAgplH4jsIreOygi1HlgA6sJbWI/LPdBouASK4vIQQlulkhhBYuMUArds/j7OKIbILLX00feUYCQmKPprVimhk8Q==-----END RSA PRIVATE KEY-----";
+      const decrypt = new JSEncrypt();
+      decrypt.setPrivateKey(privateKey);
+      return decrypt.decrypt(encrypted);
+    },
+    // 对称加密
+    aesDecrypt(ciphertext) {
+      const CryptoJS = require("crypto-js");
+      const aeskey = "60ca17c5f9e5c804382e9516";
+      const bytes = CryptoJS.AES.decrypt(ciphertext, aeskey);
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    },
   },
 };
 </script>

@@ -43,6 +43,13 @@ import logo from "../../components/logo.vue";
 import { getCookie } from "@/commons/utils";
 import keys from "@/commons/keys";
 
+// 非对称加密
+import JSEncrypt from "jsencrypt";
+const encryptor = new JSEncrypt();
+const pubKey =
+  "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCla6TYu1jlEs/brPyZP6mU+ql3hP+IyCI/3F2Z9MaUwYiLuRm90HBhsRSXScQ3dDDAx0grb48ifbEC/Ni8jManQTTevX1h6bav2Jvg+v218CmY9xZvCYwSftby8S+L2E87irn8SErOV+w9BwIFQwfSCeOiVtGxski19jucyY3gVQIDAQAB-----END PUBLIC KEY-----";
+encryptor.setPublicKey(pubKey); //设置公钥
+
 export default {
   name: "inexForm",
   data() {
@@ -70,10 +77,11 @@ export default {
       }
 
       let params = {
-        content: this.words,
+        content: encryptor.encrypt(this.words),
+        // content: this.words,
         indate: this.indateVal,
-        visitorId: getCookie('csrfToken'),
-        _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || '',
+        visitorId: getCookie("csrfToken"),
+        _csrf: sessionStorage.getItem(keys.cache.INVITATION_VALLUE) || "",
       };
 
       addContentApi(params)

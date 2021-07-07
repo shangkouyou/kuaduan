@@ -2563,7 +2563,6 @@ crypto-browserify@^3.11.0:
 crypto-js@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/crypto-js/download/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
-  integrity sha1-KQSrJnep0EKFai6i74DekuSjbcw=
 
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
@@ -4476,6 +4475,10 @@ js-yaml@^3.13.1:
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.npm.taobao.org/jsbn/download/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
+
+jsencrypt@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.nlark.com/jsencrypt/download/jsencrypt-3.2.0.tgz?cache=0&sync_timestamp=1619388207670&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjsencrypt%2Fdownload%2Fjsencrypt-3.2.0.tgz#09242aabf1984165dcd7698fe6ed163be77c05f8"
 
 jsesc@^2.5.1:
   version "2.5.2"
