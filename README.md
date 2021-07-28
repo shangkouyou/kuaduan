@@ -7,8 +7,9 @@
 
 <br>
 
-[![](http://work789.com/static/imgs/1.jpg)](http://work789.com)
-
+<div align="center">
+  <img src="./static/cover.jpeg" width="800" />
+</div>
 ## 💻 Usage
 
 http://work789.com
