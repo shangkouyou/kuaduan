@@ -4,12 +4,12 @@
       >所有新建内容有效期默认
       <strong>仅有1小时</strong>，超时后即删除无法找回，请慎重剪切</span
     >
-    <div class="header-content-right box bottom-shadow">
+    <!-- <div class="header-content-right box bottom-shadow">
       <div class="skew-box bottom-shadow"></div>
       <a @click="doDelHcontent" class="del-hconent">
         <i class="iconfont iconguanbi"></i>
       </a>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -24,10 +24,10 @@ export default {
     };
   },
   created() {
-    const showAlert = localStorage.getItem(keys.cache.ALERT_SHOW)
-    if( showAlert && showAlert !== 'true' ){
-      this.showHcontent = false;
-    }
+    // const showAlert = localStorage.getItem(keys.cache.ALERT_SHOW)
+    // if( showAlert && showAlert !== 'true' ){
+    //   this.showHcontent = false;
+    // }
   },
   methods: {
     doDelHcontent() {

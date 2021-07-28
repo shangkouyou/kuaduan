@@ -169,6 +169,7 @@ export default {
       padding: 15px;
       margin-bottom: 15px;
       cursor: default;
+      border-radius: 7px;
       &:hover {
         box-shadow: 0 3px 30px rgba(0, 0, 0, 0.15);
         transition: all ease 0.4s;

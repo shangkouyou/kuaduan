@@ -139,6 +139,7 @@ export default {
     padding: 20px 40px;
     min-width: 320px;
     box-shadow: 0 5px 12px 3px rgba(0, 9, 30, 0.2);
+    border-radius: 12px;
     .to-index-new {
       color: var(--pf-theme-sub-color);
     }
