@@ -107,6 +107,7 @@ export default {
   min-width: 600px;
   .detail-content {
     padding: 10px 0;
+    word-break: break-word;
   }
   .detail-top {
     width: 100%;
