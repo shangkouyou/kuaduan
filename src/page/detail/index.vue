@@ -38,6 +38,7 @@
         </div>
       </div>
     </div>
+    <cBottom></cBottom>
   </div>
 </template>
 
@@ -49,6 +50,7 @@ import qrcode from "../components/qrcode.vue";
 import clipboard from "../components/clipboard.vue";
 import logo from "../components/logo.vue";
 import deleter from "../components/deleter.vue";
+import cBottom from "../components/bottom.vue";
 import { getCookie } from "@/commons/utils";
 import moment from "moment";
 
@@ -70,6 +72,7 @@ export default {
     clipboard,
     logo,
     deleter,
+    cBottom,
   },
   computed: {
     gStartTime() {
@@ -108,6 +111,7 @@ export default {
   .detail-content {
     padding: 10px 0;
     word-break: break-word;
+    margin-bottom: 50px;
   }
   .detail-top {
     width: 100%;

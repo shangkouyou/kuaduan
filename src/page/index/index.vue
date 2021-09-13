@@ -51,6 +51,7 @@
       </div>
     </div>
     <a-back-top />
+    <cBottom></cBottom>
   </div>
 </template>
 
@@ -62,6 +63,7 @@ import clipboard from "../components/clipboard.vue";
 import cAlert from "../components/alert.vue";
 import deleter from "../components/deleter.vue";
 import inputForm from "./components/form.vue";
+import cBottom from "../components/bottom.vue";
 import { getCookie, isURL } from "@/commons/utils";
 import keys from "@/commons/keys";
 
@@ -86,6 +88,7 @@ export default {
     cAlert,
     deleter,
     inputForm,
+    cBottom,
   },
   mounted() {
     this.getContentList();
