@@ -1,7 +1,8 @@
 <template>
   <div class="logo">
     <a href="/">
-      <div><span>power</span><span class="ful">Ful</span> <sup>Beta</sup></div>
+      <!-- <div><span>power</span><span class="ful">Ful</span> <sup>Beta</sup></div> -->
+      <div>在线粘贴板<sup>Beta</sup></div>
     </a>
   </div>
 </template>
@@ -11,14 +12,21 @@
   font-weight: 900;
   font-size: 18px;
   letter-spacing: 2px;
-  color: #000;
+  margin-bottom: 10px;
   a {
     position: relative;
     display: block;
+    div{
+      font-family: PingFang-SC-Regular;
+      color: var(--pf-logo-color);
+      text-shadow: var(--pf-logo-shadow)
+    }
     sup {
       font-size: 12px;
       font-weight: 400;
-      color: #444;
+      color: var(--pf-logo-color);
+      letter-spacing: 1px;
+      margin-left: 2px;
     }
   }
   .ful {

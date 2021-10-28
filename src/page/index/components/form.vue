@@ -1,6 +1,7 @@
 <template>
   <div class="page-form">
     <logo></logo>
+    <modeSwitcher></modeSwitcher>
     <div class="center-box">
       <div>
         <div class="input-form box" :class="inputClass">
@@ -40,6 +41,7 @@
 <script>
 import { addContentApi } from "@/api/contentList";
 import logo from "../../components/logo.vue";
+import modeSwitcher from "../../components/modeSwitcher.vue";
 import { getCookie } from "@/commons/utils";
 import keys from "@/commons/keys";
 
@@ -58,6 +60,7 @@ export default {
   },
   components: {
     logo,
+    modeSwitcher,
   },
   mounted() {},
   methods: {
@@ -136,6 +139,8 @@ export default {
       padding: 5px 0;
       outline: none;
       width: 100%;
+      color: var(--pf-input-color);
+      background: var(--pf-input-bgcolor)
     }
   }
   .save-indate {

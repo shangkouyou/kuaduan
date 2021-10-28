@@ -1,8 +1,28 @@
-:root{
-    --pf-theme-color:#0f69ff;
-    --pf-theme-sub-color:#5551ff;
-    --pf-gray-color:#666;
-    --pf-font-color:#333;
-    --pf-page-padding:25px 30px;
-    --pf-alert-gradient:linear-gradient(to bottom,transparent 80%,rgba(0, 0, 0, 0.15));
+:root {
+    --pf-theme-color: #0f69ff;
+    --pf-theme-sub-color: #5551ff;
+    --pf-body-background-color: #fff;
+    --gary-color: #282a33;
+    --pf-gray-color: #666;
+    --pf-font-color: #333;
+    --pf-logo-color: #444;
+    --pf-logo-shadow: none;
+    --pf-page-padding: 25px 30px;
+    --pf-input-bgcolor: #fff;
+    --pf-input-color: var(--gary-color);
+    --pf-content-item-color: var(--gary-color);
+    --pf-content-item-border: none;
+    --pf-alert-gradient: linear-gradient(to bottom, transparent 80%, rgba(0, 0, 0, 0.15));
+
+}
+
+[data-theme=dark] {
+    --pf-body-background-color: #131314;
+    --pf-logo-color: #fff;
+    --pf-logo-shadow: 0 0 5px #fff;
+    --pf-input-bgcolor: #262729;
+    --pf-input-color: #cfcfd1;
+    --pf-content-item-color: #cfcfd1;
+    --pf-content-item-border: 1px solid;
+    --pf-theme-sub-color: #5069e6;
 }

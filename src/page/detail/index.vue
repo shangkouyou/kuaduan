@@ -3,6 +3,7 @@
     <cAlert></cAlert>
     <div class="detail-top">
       <logo class="detail"></logo>
+      <modeSwitcher></modeSwitcher>
     </div>
     <div v-if="detailData" class="count-down">
       <a-statistic-countdown :value="gStartTime" @finish="onDeleted" />
@@ -52,6 +53,7 @@ import logo from "../components/logo.vue";
 import deleter from "../components/deleter.vue";
 import cBottom from "../components/bottom.vue";
 import { getCookie } from "@/commons/utils";
+import modeSwitcher from "../components/modeSwitcher.vue";
 import moment from "moment";
 
 export default {
@@ -60,7 +62,7 @@ export default {
     return {
       detailData: {
         content: "加载中...",
-        copyNum : 0
+        copyNum: 0,
       },
       visitorId: getCookie("csrfToken"),
     };
@@ -73,6 +75,7 @@ export default {
     logo,
     deleter,
     cBottom,
+    modeSwitcher,
   },
   computed: {
     gStartTime() {
@@ -89,7 +92,7 @@ export default {
   methods: {
     init() {
       getItemByIdApi({ _id: this.$route.params.id }).then((res) => {
-        this.detailData = res[0] || '';
+        this.detailData = res[0] || "";
       });
     },
     gotoIndex() {
@@ -112,6 +115,7 @@ export default {
     padding: 10px 0;
     word-break: break-word;
     margin-bottom: 50px;
+    color: var(--pf-content-item-color);
   }
   .detail-top {
     width: 100%;

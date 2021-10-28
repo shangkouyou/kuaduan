@@ -1,7 +1,7 @@
 <template>
   <div class="bottom">
-    <a href="https://beian.miit.gov.cn/" target="_blank" class="bottom-body"
-      > 粤ICP备2021072368号</a
+    <a href="https://beian.miit.gov.cn/" target="_blank" class="bottom-body">
+      粤ICP备2021072368号</a
     >
   </div>
 </template>
@@ -20,7 +20,7 @@
   zoom: 1;
   margin: 0;
   line-height: 39px;
-  background: #fff;
+  background-color: var(--pf-body-background-color);
   a {
     color: #888;
     &:hover {

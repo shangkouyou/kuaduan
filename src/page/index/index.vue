@@ -173,10 +173,11 @@ export default {
       margin-bottom: 15px;
       cursor: default;
       border-radius: 7px;
+      border-bottom: var(--pf-content-item-border);
       &:hover {
         box-shadow: 0 3px 30px rgba(0, 0, 0, 0.15);
         transition: all ease 0.4s;
-        border-bottom: none;
+        border-bottom: var(--pf-content-item-border);
       }
     }
     .goto {
@@ -196,6 +197,7 @@ export default {
       max-height: 100px;
       overflow: auto;
       word-break: break-word;
+      color: var(--pf-content-item-color);
     }
     .tools {
       position: relative;
