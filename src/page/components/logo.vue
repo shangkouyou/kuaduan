@@ -17,7 +17,6 @@
     position: relative;
     display: block;
     div{
-      font-family: PingFang-SC-Regular;
       color: var(--pf-logo-color);
       text-shadow: var(--pf-logo-shadow)
     }
