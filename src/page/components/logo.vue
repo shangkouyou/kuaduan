@@ -9,8 +9,8 @@
 <style lang="less" scoped>
 .logo {
   position: absolute;
-  font-weight: 900;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 16px;
   letter-spacing: 2px;
   margin-bottom: 10px;
   a {

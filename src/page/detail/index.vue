@@ -24,12 +24,15 @@
             @deleted="onDeleted"
           ></deleter>
         </div>
-        <div>
+        <div class="one-line">
           <timeBoard v-if="detailData" :item="detailData"></timeBoard>
         </div>
       </div>
       <div v-if="detailData.content" class="detail-content">
         {{ detailData.content }}
+        <div class="bottom-line">
+          <timeBoard v-if="detailData" :item="detailData"></timeBoard>
+        </div>
       </div>
       <div v-if="!detailData" class="no-data box">
         <div><i class="iconfont iconku"></i></div>
@@ -116,6 +119,9 @@ export default {
     word-break: break-word;
     margin-bottom: 50px;
     color: var(--pf-content-item-color);
+  }
+  .bottom-line{
+    display: none;
   }
   .detail-top {
     width: 100%;

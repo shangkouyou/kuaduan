@@ -1,20 +1,54 @@
-@media screen and (max-width: 1000px) {
-  .index-page {
-    .header-content {
-      span {
-        margin-right: 80px;
-        display: inline-block;
-      }
-    }
-    .mode-switcher{
+@media screen and (max-width: 900px) {
+  #app {
+    .mode-switcher {
       display: none;
     }
 
-    .page-form {
+    .logo {
+      position: relative;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .index-page {
+      .header-content {
+        span {
+          display: inline-block;
+        }
+      }
+    }
+
+    .detail-page {
+      min-width: 100%;
       .logo {
-        position: relative;
-        text-align: center;
-        margin-bottom: 15px;
+        margin-bottom: 0;
+      }
+      .ant-statistic{
+        font-size: 12px;
+        .ant-statistic-content {
+          font-size: 16px;
+          .ant-statistic-content-value{
+            color: #555;
+          }
+        }
+      }
+
+      .viewer {
+        box-shadow: none;
+        padding: 10px;
+        width: 100%;
+        margin-top: 0;
+        .one-line {
+          display: none;
+        }
+
+        .bottom-line {
+          display: block;
+          margin-top: 15px;
+        }
+      }
+      .detail-top {
+        padding: 25px;
       }
     }
   }

@@ -19,7 +19,7 @@
 [data-theme=dark] {
     --pf-body-background-color: #131314;
     --pf-logo-color: #fff;
-    --pf-logo-shadow: 0 0 5px #fff;
+    --pf-logo-shadow: 0 0 2px #fff;
     --pf-input-bgcolor: #262729;
     --pf-input-color: #cfcfd1;
     --pf-content-item-color: #cfcfd1;
