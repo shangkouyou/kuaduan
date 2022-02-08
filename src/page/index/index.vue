@@ -233,3 +233,14 @@ export default {
   }
 }
 </style>
+<style lang="less">
+[data-theme=dark]{
+  .index-page{
+    .content-item{
+      a{
+        border-radius: 0;
+      }
+    }
+  }
+}
+</style>
