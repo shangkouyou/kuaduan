@@ -19,7 +19,6 @@
 
 <script>
 import { timeFormat } from "@/commons/times";
-import moment from "moment";
 
 export default {
   name: "TimeBoard",
@@ -40,9 +39,9 @@ export default {
       return timeFormat(tt);
     },
     remaining(item) {
-      return moment(item.createTime)
-        .add(item.indate, "h")
-        .format("HH:mm");
+      let time = new Date(item.createTime);
+      time.setHours(time.getHours()+item.indate)
+      return `${time.getHours()}:${time.getMinutes()}`
     },
   },
 };

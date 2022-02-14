@@ -1,7 +1,6 @@
 /* eslint-disable */
 import {
   Modal ,
-  Empty,
   message,
   Tooltip,
   Popconfirm,
@@ -12,7 +11,6 @@ import {
 } from 'ant-design-vue'
 import Vue from 'vue'
 Vue.use(Modal)
-Vue.use(Empty)
 Vue.use(Tooltip)
 Vue.use(Popconfirm)
 Vue.use(Pagination)

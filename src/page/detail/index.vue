@@ -6,7 +6,7 @@
       <modeSwitcher></modeSwitcher>
     </div>
     <div v-if="detailData" class="count-down">
-      <a-statistic-countdown :value="gStartTime" @finish="onDeleted" />
+      <a-statistic-countdown v-show="gStartTime" :value="gStartTime" @finish="onDeleted" />
       <span class="cd-text">后过期</span>
     </div>
     <div class="viewer">
@@ -57,7 +57,6 @@ import deleter from "../components/deleter.vue";
 import cBottom from "../components/bottom.vue";
 import { getCookie } from "@/commons/utils";
 import modeSwitcher from "../components/modeSwitcher.vue";
-import moment from "moment";
 
 export default {
   name: "detailPage",
@@ -82,11 +81,9 @@ export default {
   },
   computed: {
     gStartTime() {
-      let st = moment(this.detailData.createTime).add(
-        this.detailData.indate,
-        "h"
-      );
-      return st._d.getTime();
+      let time = new Date(this.detailData.createTime);
+      time.setHours(time.getHours()+this.detailData.indate)
+      return time.getTime() || '';
     },
   },
   mounted() {
